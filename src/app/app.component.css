@@ -1,0 +1,16 @@
+mat-sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+}
+
+mat-sidenav-content {
+  background: #f1f3f5;
+}
+
+mat-sidenav {
+  width: 241px;
+}

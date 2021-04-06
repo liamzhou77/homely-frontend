@@ -4,6 +4,7 @@
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
   $font-family: "Montserrat",
+  $headline: mat-typography-level(26px, 100%, 800),
 );
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
