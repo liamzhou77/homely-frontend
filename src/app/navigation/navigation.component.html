@@ -1,5 +1,23 @@
 <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Homely</h1>
 <div id="nav-list">
+  <div class="nav-item" *ngIf="isLoggedIn">
+    <span
+      class="iconify nav-icon"
+      data-inline="false"
+      data-icon="ic:outline-layers"
+    ></span>
+    <span class="nav-text"
+          (click)="logout()">(Temp) Logout</span>
+  </div>
+  <div class="nav-item" *ngIf="!isLoggedIn">
+    <span
+      class="iconify nav-icon"
+      data-inline="false"
+      data-icon="ic:outline-layers"
+    ></span>
+    <span class="nav-text"
+          (click)="login()">(Temp) Login</span>
+  </div>
   <div class="nav-item" routerLink="/dashboard" routerLinkActive="active">
     <span
       class="iconify nav-icon"
