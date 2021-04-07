@@ -9,14 +9,16 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AuthService } from './core/auth-service.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSidenavModule,
+    DashboardModule,
   ],
   providers: [
     AuthService,

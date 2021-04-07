@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback/signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
@@ -12,8 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    component: DashboardComponent,
   },
   {
     path: 'calendar',

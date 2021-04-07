@@ -1,8 +1,69 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
-    <app-navigation></app-navigation>
+    <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Homely</h1>
+    <div id="side-nav-list">
+      <div
+        class="side-nav-item"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+      >
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-layers"
+        ></span>
+        <span class="side-nav-text">Dashboard</span>
+      </div>
+      <div
+        class="side-nav-item"
+        routerLink="/calendar"
+        routerLinkActive="active"
+      >
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-calendar-today"
+        ></span>
+        <span class="side-nav-text">Calendar</span>
+      </div>
+      <div class="side-nav-item" routerLink="/tasks" routerLinkActive="active">
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-playlist-add-check"
+        ></span>
+        <span class="side-nav-text">Tasks</span>
+      </div>
+      <div class="side-nav-item" routerLink="/budget" routerLinkActive="active">
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-attach-money"
+        ></span>
+        <span class="side-nav-text">Budget</span>
+      </div>
+      <div class="side-nav-item" routerLink="/meals" routerLinkActive="active">
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-set-meal"
+        ></span>
+        <span class="side-nav-text">Meals</span>
+      </div>
+      <!-- <div class="side-nav-item">
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-settings"
+        ></span>
+        <span class="side-nav-text">Settings</span>
+      </div> -->
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
+    <div id="top-bar">
+      <div class="top-nav-list"></div>
+    </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
