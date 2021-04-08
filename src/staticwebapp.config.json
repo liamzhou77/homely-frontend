@@ -1,4 +1,8 @@
 {
+  "navigationFallback": {
+    "rewrite": "/dashboard",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+  },
   "routes": [
     {
       "route": "/calendar",
