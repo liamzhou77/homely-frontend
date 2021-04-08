@@ -16,7 +16,10 @@ export class AppComponent {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    if(!this.isLoggedIn)
+      login();
+  }
 
 
   
