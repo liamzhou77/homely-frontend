@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "route": "/calendar",
+      "serve": "/calendar",
+      "statusCode": 200
+    },
+    {
+      "route": "/tasks",
+      "serve": "/tasks",
+      "statusCode": 200
+    },
+    {
+      "route": "/*",
+      "serve": "/dashboard",
+      "statusCode": 200
+    },
+
+  ]
+}
