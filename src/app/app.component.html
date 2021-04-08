@@ -2,19 +2,17 @@
   <mat-sidenav mode="side" opened>
     <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Homely</h1>
     <div id="side-nav-list">
-      <div class="side-nav-item" *ngIf="isLoggedIn">
+      <div class="side-nav-item" *ngIf="isLoggedIn" (click)="logout()">
         <span class="iconify side-nav-icon"
               data-inline="false"
               data-icon="ic:outline-layers"></span>
-        <span class="side-nav-text"
-              (click)="logout()">(Temp) Logout</span>
+        <span class="side-nav-text">(Temp) Logout</span>
       </div>
-      <div class="side-nav-item" *ngIf="!isLoggedIn">
+      <div class="side-nav-item" *ngIf="!isLoggedIn" (click)="login()">
         <span class="iconify side-nav-icon"
               data-inline="false"
               data-icon="ic:outline-layers"></span>
-        <span class="side-nav-text"
-              (click)="login()">(Temp) Login</span>
+        <span class="side-nav-text">(Temp) Login</span>
       </div>
       <div class="side-nav-item"
            routerLink="/dashboard"
