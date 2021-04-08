@@ -13,13 +13,12 @@ export class AppComponent {
   constructor(private _authService: AuthService) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+      if(!this.isLoggedIn)
+        this.login();
     });
   }
 
-  ngOnInit(): void { 
-    if(!this.isLoggedIn)
-      this.login();
-  }
+  ngOnInit(): void { }
 
 
   
