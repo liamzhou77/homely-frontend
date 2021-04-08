@@ -18,7 +18,7 @@ export class AppComponent {
 
   ngOnInit(): void { 
     if(!this.isLoggedIn)
-      login();
+      this.login();
   }
 
 
