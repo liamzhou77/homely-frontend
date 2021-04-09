@@ -10,6 +10,12 @@ mat-sidenav-content {
   background: #f1f3f5;
 }
 
+/* nav */
+.nav-icon {
+  width: 29px;
+  height: 29px;
+}
+
 /* side nav */
 mat-sidenav {
   width: 241px;
@@ -38,13 +44,8 @@ mat-sidenav {
   cursor: default;
 }
 
-.side-nav-icon {
-  width: 29px;
-  height: 29px;
-  margin-right: 10px;
-}
-
 .side-nav-text {
+  margin-left: 11px;
   font-size: 18px;
 }
 
@@ -85,4 +86,16 @@ mat-sidenav {
   height: 74px;
   box-shadow: 0px 1px 0px #e2e5ed;
   background: #ffffff;
+}
+
+#top-bar-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: absolute;
+  width: 306px;
+  height: 34px;
+  top: 23px;
+  right: 31px;
 }

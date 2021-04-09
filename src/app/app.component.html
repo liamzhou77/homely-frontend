@@ -4,7 +4,7 @@
     <div id="side-nav-list">
       <div class="side-nav-item" *ngIf="!isLoggedIn" (click)="login()">
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-layers"
         ></span>
@@ -16,7 +16,7 @@
         routerLinkActive="active"
       >
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-layers"
         ></span>
@@ -28,7 +28,7 @@
         routerLinkActive="active"
       >
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-calendar-today"
         ></span>
@@ -36,7 +36,7 @@
       </div>
       <div class="side-nav-item" routerLink="/tasks" routerLinkActive="active">
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-playlist-add-check"
         ></span>
@@ -44,7 +44,7 @@
       </div>
       <div class="side-nav-item" routerLink="/budget" routerLinkActive="active">
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-attach-money"
         ></span>
@@ -52,7 +52,7 @@
       </div>
       <div class="side-nav-item" routerLink="/meals" routerLinkActive="active">
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-set-meal"
         ></span>
@@ -60,7 +60,7 @@
       </div>
       <!-- <div class="side-nav-item">
         <span
-          class="iconify side-nav-icon"
+          class="iconify nav-icon"
           data-inline="false"
           data-icon="ic:outline-settings"
         ></span>
@@ -74,7 +74,7 @@
       (click)="logout()"
     >
       <span
-        class="iconify side-nav-icon"
+        class="iconify nav-icon"
         data-inline="false"
         data-icon="ic:outline-logout"
       ></span>
@@ -83,7 +83,17 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div id="top-bar">
-      <div class="top-nav-list"></div>
+      <div id="top-bar-list">
+        <span class="font-lg">Welcome Matt!</span>
+        <span
+          class="iconify nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-notifications"
+        ></span>
+        <div class="avatar-container-lg">
+          <img src="assets/images/avatar1.jpg" class="avatar" />
+        </div>
+      </div>
     </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

@@ -1,0 +1,39 @@
+body {
+  font-family: Montserrat, sans-serif;
+}
+
+.font-lg {
+  font-size: 16px;
+}
+
+.font-md {
+  font-size: 14px;
+}
+
+.font-sm {
+  font-size: 12px;
+}
+
+.avatar-container {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar-container-lg {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar {
+  display: inline;
+  margin: 0 auto;
+  margin-left: -25%;
+  height: 100%;
+  width: auto;
+}
