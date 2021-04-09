@@ -1,6 +1,13 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
-    <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Hestia</h1>
+    <div
+      id="brand"
+      class="primary-color-dark"
+      routerLink="/dashboard"
+      routerLinkActive="active"
+    >
+      Hestia
+    </div>
     <div id="side-nav-list">
       <div class="side-nav-item" *ngIf="!isLoggedIn" (click)="login()">
         <span

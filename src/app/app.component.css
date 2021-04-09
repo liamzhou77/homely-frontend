@@ -69,12 +69,15 @@ mat-sidenav {
 
 #brand {
   position: absolute;
-  width: 118px;
-  height: 26px;
   left: 31px;
   top: 25px;
+
   cursor: pointer;
   outline: 0;
+
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 100%;
 }
 
 #brand.active {
