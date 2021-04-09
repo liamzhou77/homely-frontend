@@ -1,51 +1,61 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
-    <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Homely</h1>
+    <h1 id="brand" routerLink="/dashboard" routerLinkActive="active">Hestia</h1>
     <div id="side-nav-list">
-      <div class="side-nav-item" *ngIf="isLoggedIn" (click)="logout()">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-layers"></span>
-        <span class="side-nav-text">(Temp) Logout</span>
-      </div>
       <div class="side-nav-item" *ngIf="!isLoggedIn" (click)="login()">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-layers"></span>
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-layers"
+        ></span>
         <span class="side-nav-text">(Temp) Login</span>
       </div>
-      <div class="side-nav-item"
-           routerLink="/dashboard"
-           routerLinkActive="active">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-layers"></span>
+      <div
+        class="side-nav-item"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+      >
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-layers"
+        ></span>
         <span class="side-nav-text">Dashboard</span>
       </div>
-      <div class="side-nav-item"
-           routerLink="/calendar"
-           routerLinkActive="active">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-calendar-today"></span>
+      <div
+        class="side-nav-item"
+        routerLink="/calendar"
+        routerLinkActive="active"
+      >
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-calendar-today"
+        ></span>
         <span class="side-nav-text">Calendar</span>
       </div>
       <div class="side-nav-item" routerLink="/tasks" routerLinkActive="active">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-playlist-add-check"></span>
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-playlist-add-check"
+        ></span>
         <span class="side-nav-text">Tasks</span>
       </div>
       <div class="side-nav-item" routerLink="/budget" routerLinkActive="active">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-attach-money"></span>
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-attach-money"
+        ></span>
         <span class="side-nav-text">Budget</span>
       </div>
       <div class="side-nav-item" routerLink="/meals" routerLinkActive="active">
-        <span class="iconify side-nav-icon"
-              data-inline="false"
-              data-icon="ic:outline-set-meal"></span>
+        <span
+          class="iconify side-nav-icon"
+          data-inline="false"
+          data-icon="ic:outline-set-meal"
+        ></span>
         <span class="side-nav-text">Meals</span>
       </div>
       <!-- <div class="side-nav-item">
@@ -56,6 +66,19 @@
         ></span>
         <span class="side-nav-text">Settings</span>
       </div> -->
+    </div>
+    <div
+      id="side-nav-bottom"
+      class="side-nav-item"
+      *ngIf="isLoggedIn"
+      (click)="logout()"
+    >
+      <span
+        class="iconify side-nav-icon"
+        data-inline="false"
+        data-icon="ic:outline-logout"
+      ></span>
+      <span class="side-nav-text">Logout</span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

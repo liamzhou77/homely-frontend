@@ -22,9 +22,9 @@ mat-sidenav {
   justify-content: flex-start;
   align-items: center;
 
-  border-radius: 0px 23.5px 23.5px 0px;
-  width: 216px;
   padding: 11px 0px;
+  padding-left: 31px;
+  border-radius: 0px 23.5px 23.5px 0px;
   cursor: pointer;
   outline: 0;
 }
@@ -41,7 +41,6 @@ mat-sidenav {
 .side-nav-icon {
   width: 29px;
   height: 29px;
-  margin-left: 31px;
   margin-right: 10px;
 }
 
@@ -53,12 +52,18 @@ mat-sidenav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
 
   position: absolute;
-  width: 140px;
-  height: 399px;
   top: 151px;
+  width: 216px;
+  height: 399px;
+}
+
+#side-nav-bottom {
+  position: absolute;
+  width: calc(216px - 31px);
+  bottom: 75px;
 }
 
 #brand {
