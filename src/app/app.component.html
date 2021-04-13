@@ -9,14 +9,6 @@
       Hestia
     </div>
     <div id="side-nav-list">
-      <div class="side-nav-item" *ngIf="!isLoggedIn" (click)="login()">
-        <span
-          class="iconify nav-icon"
-          data-inline="false"
-          data-icon="ic:outline-layers"
-        ></span>
-        <span class="side-nav-text">(Temp) Login</span>
-      </div>
       <div
         class="side-nav-item"
         routerLink="/dashboard"
@@ -75,7 +67,7 @@
       </div> -->
     </div>
     <div
-      id="side-nav-bottom"
+      id="side-nav-bottom-1"
       class="side-nav-item"
       *ngIf="isLoggedIn"
       (click)="logout()"
@@ -87,11 +79,24 @@
       ></span>
       <span class="side-nav-text">Logout</span>
     </div>
+    <div
+      id="side-nav-bottom-2"
+      class="side-nav-item"
+      *ngIf="!isLoggedIn"
+      (click)="login()"
+    >
+      <span
+        class="iconify nav-icon"
+        data-inline="false"
+        data-icon="ic:outline-logout"
+      ></span>
+      <span class="side-nav-text">Login</span>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div id="top-bar">
-      <div id="top-bar-list">
-        <span class="font-lg">Welcome Matt!</span>
+      <div id="top-bar-list" *ngIf="isLoggedIn">
+        <span class="font-lg">Welcome {{this.user.profile.name}}</span>
         <span
           class="iconify nav-icon"
           data-inline="false"

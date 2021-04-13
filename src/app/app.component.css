@@ -61,7 +61,13 @@ mat-sidenav {
   height: 399px;
 }
 
-#side-nav-bottom {
+#side-nav-bottom-1 {
+  position: absolute;
+  width: calc(216px - 31px);
+  bottom: 75px;
+}
+
+#side-nav-bottom-2 {
   position: absolute;
   width: calc(216px - 31px);
   bottom: 75px;

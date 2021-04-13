@@ -7,6 +7,11 @@ import { environment } from "../../environments/environment";
 @Injectable()
 export class AuthService {
   private _user: User;
+
+  get user(): User {
+    return this._user;
+  }
+
   private _userManager: UserManager;
   private _loginChangedSubject = new Subject<boolean>();
 

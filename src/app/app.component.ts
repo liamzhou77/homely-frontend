@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'oidc-client';
 import { AuthService } from './core/auth-service.component';
 
 @Component({
@@ -7,18 +8,21 @@ import { AuthService } from './core/auth-service.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'homely';
-    isLoggedIn = false;
+    title = 'homely';
+  isLoggedIn = false;
+  user: User;
+
 
   constructor(private _authService: AuthService) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
-      if(!this.isLoggedIn)
-        this.login();
+      this.user = this._authService.user;
     });
+
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
 
   
