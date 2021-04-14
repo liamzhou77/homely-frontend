@@ -9,6 +9,7 @@ import { AuthService } from './core/auth-service.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthGuard } from './core/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
       useClass: AuthInterceptorService,
       multi: true,
     },
+    AuthGuard
 ],
   bootstrap: [AppComponent],
 })

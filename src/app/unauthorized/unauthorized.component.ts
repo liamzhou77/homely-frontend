@@ -15,4 +15,8 @@ export class UnauthorizedComponent implements OnInit {
   logout() {
     this._authService.logout();
   }
+  login() {
+    this._authService.login();
+  }
+
 }

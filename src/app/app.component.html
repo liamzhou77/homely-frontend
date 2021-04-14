@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
     <div
       id="brand"
       class="primary-color-dark"
@@ -88,7 +88,7 @@
       <span
         class="iconify nav-icon"
         data-inline="false"
-        data-icon="ic:outline-logout"
+        data-icon="ic:outline-login"
       ></span>
       <span class="side-nav-text">Login</span>
     </div>

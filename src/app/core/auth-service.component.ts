@@ -42,7 +42,7 @@ export class AuthService {
         this._loginChangedSubject.next(userCurrent);
       }
       this._user = user;
-      console.log(environment.clientRoot);
+      
       return userCurrent;
     });
   }
