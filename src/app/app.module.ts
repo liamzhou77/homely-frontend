@@ -10,9 +10,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthGuard } from './core/auth.guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UnauthorizedComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

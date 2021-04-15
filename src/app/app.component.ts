@@ -8,7 +8,7 @@ import { AuthService } from './core/auth-service.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-    title = 'homely';
+  
   isLoggedIn = false;
   user: User;
 

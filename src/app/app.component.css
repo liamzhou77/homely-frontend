@@ -44,6 +44,33 @@ mat-sidenav {
   cursor: default;
 }
 
+.top-bar-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding:11px;
+  padding-left: 31px;
+  padding-right: 31px;
+  border-radius: 23.5px 23.5px 23.5px 23.5px;
+  cursor: pointer;
+  outline: 0;
+}
+
+.top-bar-item:hover {
+  background: #f2f3f5;
+}
+
+.top-bar-item.active {
+  background: rgba(157, 200, 141, 0.6);
+  cursor: default;
+}
+
+.top-bar-text {
+    font-size: 24px;
+}
+
 .side-nav-text {
   margin-left: 11px;
   font-size: 18px;

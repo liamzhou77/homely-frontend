@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
+<mat-sidenav-container *ngIf="isLoggedIn">
+  <mat-sidenav mode="side" opened>
     <div
       id="brand"
       class="primary-color-dark"
@@ -69,7 +69,6 @@
     <div
       id="side-nav-bottom-1"
       class="side-nav-item"
-      *ngIf="isLoggedIn"
       (click)="logout()"
     >
       <span
@@ -79,23 +78,10 @@
       ></span>
       <span class="side-nav-text">Logout</span>
     </div>
-    <div
-      id="side-nav-bottom-2"
-      class="side-nav-item"
-      *ngIf="!isLoggedIn"
-      (click)="login()"
-    >
-      <span
-        class="iconify nav-icon"
-        data-inline="false"
-        data-icon="ic:outline-login"
-      ></span>
-      <span class="side-nav-text">Login</span>
-    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div id="top-bar">
-      <div id="top-bar-list" *ngIf="isLoggedIn">
+      <div id="top-bar-list">
         <span class="font-lg">Welcome {{this.user.profile.name}}</span>
         <span
           class="iconify nav-icon"
@@ -110,3 +96,29 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-sidenav-container *ngIf="!isLoggedIn">
+  <mat-sidenav-content>
+    <div id="brand"
+         class="primary-color-dark"
+         routerLink="/dashboard"
+         routerLinkActive="active">
+      Hestia
+    </div>
+    <div id="top-bar">
+      <div id="top-bar-list">
+        <div class="top-bar-item">
+          <span class="top-bar-text">Register</span>
+        </div>
+        <div class="top-bar-item">
+          <span class="top-bar-text" (click)="login()">Login</span>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
