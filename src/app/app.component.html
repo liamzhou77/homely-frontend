@@ -1,5 +1,5 @@
-<mat-sidenav-container *ngIf="isLoggedIn">
-  <mat-sidenav mode="side" opened>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
     <div
       id="brand"
       class="primary-color-dark"
@@ -80,7 +80,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div id="top-bar">
+    <div id="top-bar" *ngIf="isLoggedIn">
       <div id="top-bar-list">
         <span class="font-lg">Welcome {{this.user.profile.name}}</span>
         <span
@@ -93,19 +93,14 @@
         </div>
       </div>
     </div>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
-<mat-sidenav-container *ngIf="!isLoggedIn">
-  <mat-sidenav-content>
-    <div id="brand"
+     <div id="brand"
          class="primary-color-dark"
          routerLink="/dashboard"
-         routerLinkActive="active">
+         routerLinkActive="active"
+          *ngIf="!isLoggedIn">
       Hestia
     </div>
-    <div id="top-bar">
+    <div id="top-bar" *ngIf="!isLoggedIn">
       <div id="top-bar-list">
         <div class="top-bar-item">
           <span class="top-bar-text">Register</span>

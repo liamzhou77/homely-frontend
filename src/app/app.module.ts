@@ -13,7 +13,10 @@ import { AuthGuard } from './core/auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
-  declarations: [AppComponent, UnauthorizedComponent],
+  declarations: [
+    AppComponent,
+    UnauthorizedComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
