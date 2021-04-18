@@ -42,6 +42,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('./register/register.module').then((m) => m.RegisterModule),
+  },
+  {
     path: 'signin-callback',
     component: SigninRedirectCallbackComponent,
   },
