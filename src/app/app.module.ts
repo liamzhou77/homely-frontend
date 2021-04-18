@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './core/auth-service.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthGuard } from './core/auth.guard';
@@ -23,6 +23,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     BrowserAnimationsModule,
     MatSidenavModule,
     DashboardModule,
+    HttpClientModule,
   ],
   providers: [
     AuthService,

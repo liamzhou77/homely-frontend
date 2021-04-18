@@ -2,30 +2,28 @@
 <mat-card class="my-card">
   <mat-card-content>
     <div class="form-title">Registration Form</div>
-  <form class="my-form">
+    <mat-progress-spinner *ngIf="showSpinner"></mat-progress-spinner>
+  <form class="my-form" [formGroup]="registrationForm" (ngSubmit) = "register(registrationForm.value)">
      <mat-form-field class="full-width">
-         <mat-label>First Name</mat-label>
-            <input  matInput  placeholder="First name"  name="fname"  required>
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Last Name</mat-label>
-            <input  matInput  placeholder="Last Name" name="lname"  required>
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <input  matInput  placeholder="Address" name="address"  required>
+         <mat-label>UserName</mat-label>
+            <input  matInput  placeholder="UserName"  name="UserName"  required formControlName="UserName">
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
-            <input  matInput  placeholder="Email" name="email">
+            <input  matInput  placeholder="Email" name="Email" formControlName="Email">
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input  matInput  placeholder="Password"  name="password">
+            <input  matInput  placeholder="Password"  name="Password" formControlName="Password">
          </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Confirm Password</mat-label>
+            <input  matInput  placeholder="Confirm Password"  name="ConfirmPassword" formControlName="ConfirmPassword">
+         </mat-form-field>
+     <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" value="submit">REGISTER</button>
+   </mat-card-actions>
+
   </form>
 </mat-card-content>
-     <mat-card-actions>
-      <button mat-raised-button (click)="register()" color="primary">REGISTER</button>
-   </mat-card-actions>
 </mat-card>
