@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from 'oidc-client';
 import { AuthService } from './core/auth-service.component';
+import { RegisterComponent } from './register/register.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,7 @@ export class AppComponent {
   user: User;
 
 
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService, private  dialog:  MatDialog) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
@@ -32,5 +34,9 @@ export class AppComponent {
 
   logout() {
     this._authService.logout();
+  }
+
+  register() {
+    this.dialog.open(RegisterComponent,  { panelClass: 'custom-dialog-container' });
   }
 }

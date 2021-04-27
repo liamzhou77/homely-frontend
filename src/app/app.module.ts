@@ -11,6 +11,7 @@ import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthGuard } from './core/auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MatSidenavModule,
     DashboardModule,
     HttpClientModule,
+    MaterialModule
   ],
   providers: [
     AuthService,

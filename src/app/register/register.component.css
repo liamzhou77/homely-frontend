@@ -2,7 +2,8 @@
   min-width: 60%;
   max-width: 80%;
   width: 100%;
-  margin:auto;
+  margin: auto;
+  text-align: center;
 }
 
 .full-width {
@@ -10,12 +11,12 @@
 }
 
 .my-card {
-  width: 692px;
-  height: 924px;
+  width: 400px;
+  height: 300px;
   background: #FFFFFF;
   border-radius: 20px;
   margin: auto;
-  margin-top: 15px;  
+  margin-top: 15px;
 }
 
 mat-form-field {
@@ -29,4 +30,8 @@ mat-form-field {
     color: #6d955e;
     margin: auto;
     text-align: center;
+}
+
+#register-button {
+    width: 80%; 
 }

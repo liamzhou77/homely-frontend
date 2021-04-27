@@ -1,105 +1,53 @@
-mat-sidenav-container {
+
+#house-top {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+width: 200px;
+height: 200px;
+left: 65vw;
+top: 55vh;
 }
 
-mat-sidenav-content {
-  background: #f1f3f5;
+#house-left {
+/* streamline-icon-house-1@200x200 1 */
+position: absolute;
+width: 200px;
+height: 200px;
+right: 24vw;
+top: 20vh;
+
 }
 
-/* nav */
-.nav-icon {
-  width: 29px;
-  height: 29px;
+#house-right {
+    /* streamline-icon-house-13@200x200 1 */
+position: absolute;
+width: 200px;
+height: 200px;
+right: 4vw;
+top: 20vh;
 }
 
-/* side nav */
-mat-sidenav {
-  width: 241px;
-  box-shadow: 1px 0px 0px #e2e5ed;
+#about-big {
+    background-color: #ffffff;
+    position: absolute;
+    width: 40vw;
+    height:70vh;
+    left:12vw;
+    top: 17vh;
+    border-radius: 50px;
+    border: 1px solid;
+    border-color: #9dc88d;
+    align-content: center;
+    transform: rotate(-2deg);
+ 
 }
 
-.side-nav-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 11px 0px;
-  padding-left: 31px;
-  border-radius: 0px 23.5px 23.5px 0px;
-  cursor: pointer;
-  outline: 0;
-}
-
-  .side-nav-item:hover {
-    background: #f2f3f5;
-  }
-
-  .side-nav-item.active {
-    background: rgba(157, 200, 141, 0.6);
-    cursor: default;
-  }
-
-.side-nav-text {
-  margin-left: 11px;
-  font-size: 18px;
-}
-
-#side-nav-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  position: absolute;
-  top: 151px;
-  width: 216px;
-  height: 399px;
-}
-
-#side-nav-bottom-1 {
-  position: absolute;
-  width: calc(216px - 31px);
-  bottom: 75px;
-}
-
-#side-nav-bottom-2 {
-  position: absolute;
-  width: calc(216px - 31px);
-  bottom: 75px;
-}
-
-#brand {
-  position: absolute;
-  left: 31px;
-  top: 25px;
-  cursor: pointer;
-  outline: 0;
-  font-size: 34px;
+#about-big-text {
+  color: #9dc88d;
+  font-size: 66px;
   font-weight: 700;
-  line-height: 100%;
-}
+  line-height: 2em;
+  padding: 20px;
+  word-spacing: 15px;
 
-  #brand.active {
-    cursor: default;
-  }
 
-/* top nav */
-#top-bar {
-  height: 74px;
-  box-shadow: 0px 1px 0px #e2e5ed;
-  background: #ffffff;
-}
-
-#top-bar-list {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  width: 306px;
-  height: 34px;
-  top: 23px;
-  right: 31px;
 }

@@ -45,3 +45,17 @@ body {
   height: 100%;
   width: auto;
 }
+
+
+mat-progress-spinner {
+  display: block !important;
+  position: fixed !important;
+  z-index: 1031; /* High z-index so it is on top of the page */
+  top: 50%;
+  right: 50%; /* or: left: 50%; */
+}
+
+.custom-dialog-container .mat-dialog-container {
+    width: 30vw;
+    height: 45vh;
+}

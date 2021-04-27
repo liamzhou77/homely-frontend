@@ -36,7 +36,6 @@ export class RegisterComponent implements OnInit {
   }
 
   updateFormValues(formValues: RegistrationModel) {
-    console.log(formValues)
 
     this.registrationModel.UserName = formValues.UserName;
     this.registrationModel.Email = formValues.Email;
@@ -48,10 +47,12 @@ export class RegisterComponent implements OnInit {
 
   register(data: any) {
     this.showSpinner = true;
+    document.getElementById("overlay").style.opacity = ".5";
 
     this._authService.register(data)
       .pipe(finalize(() => {
         this.showSpinner = false;
+        document.getElementById("overlay").style.opacity = "1";
       }))  
       .subscribe(
           (result: any) => {         

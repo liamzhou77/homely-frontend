@@ -7,7 +7,10 @@ mat-sidenav-container {
 }
 
 mat-sidenav-content {
-  background: #f1f3f5;
+  background-color: #ffffff;
+  background-image:  radial-gradient(#9dc88d 1.05px, transparent 1.05px), radial-gradient(#9dc88d 1.05px, #ffffff 1.05px);
+  background-size: 42px 42px;
+  background-position: 0 0,21px 21px;
 }
 
 /* nav */
@@ -49,6 +52,33 @@ mat-sidenav {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  padding:11px;
+  padding-left: 31px;
+  padding-right: 31px;
+  border-radius: 23.5px 23.5px 23.5px 23.5px;
+  cursor: pointer;
+  outline: 0;
+}
+
+.top-bar-item-button:hover {
+  background: #9DC88D;
+  opacity: .9;
+}
+
+.top-bar-item-button.active {
+  background: #9DC88D;
+  opacity: 1;
+  cursor: default;
+}
+
+.top-bar-item-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #9DC88D;
+  opacity: .7;
+  width: 100px;
 
   padding:11px;
   padding-left: 31px;
@@ -66,6 +96,7 @@ mat-sidenav {
   background: rgba(157, 200, 141, 0.6);
   cursor: default;
 }
+
 
 .top-bar-text {
     font-size: 24px;
@@ -102,13 +133,13 @@ mat-sidenav {
 
 #brand {
   position: absolute;
-  left: 31px;
-  top: 25px;
+  left: 2vw;
+  top: 2vh;
 
   cursor: pointer;
   outline: 0;
 
-  font-size: 34px;
+  font-size: 42px;
   font-weight: 700;
   line-height: 100%;
 }
@@ -130,8 +161,29 @@ mat-sidenav {
   align-items: center;
 
   position: absolute;
-  width: 306px;
+  width: 356px;
   height: 34px;
-  top: 23px;
-  right: 31px;
+  top: 2.5vh;
+  right: 4vw;
 }
+
+
+
+#top-bar-list-loggedout {
+    /* Frame 82 */
+/* Auto Layout */
+
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: flex-start;
+padding: 10.5px 50px;
+
+position: absolute;
+width: 623px;
+height: 79px;
+left: 4vw;
+top: 3vh;
+}
+
+
