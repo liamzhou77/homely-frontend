@@ -22,7 +22,7 @@ export class AuthService {
   loginChanged = this._loginChangedSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this._user = null;
+   
     const stsSettings = {
       authority: environment.stsAuthority,
       client_id: environment.clientId,
@@ -33,6 +33,11 @@ export class AuthService {
     };
     console.log(environment.clientRoot);
     this._userManager = new UserManager(stsSettings);
+
+      this._userManager.getUser().then(user => {
+        this._user = user;
+        console.log(user);
+        });
   }
 
   login() {
@@ -42,6 +47,7 @@ export class AuthService {
   isLoggedIn(): Promise<boolean> {
     return this._userManager.getUser().then((user) => {
       const userCurrent = !!user && !user.expired;
+      console.log("this user?", user);
       if (this._user !== user) {
         this._loginChangedSubject.next(userCurrent);
       }
@@ -54,8 +60,8 @@ export class AuthService {
   completeLogin() {
     return this._userManager.signinRedirectCallback().then((user) => {
       this._user = user;
-      this._loginChangedSubject.next(!!user && !user.expired);
-      return user;
+      this._loginChangedSubject.next(!!this._user && !this._user.expired);
+      return this._user;
     });
   }
 
