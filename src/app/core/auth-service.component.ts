@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   register(model: RegistrationModel) {
-    return this.http.post<RegistrationModel>(environment.stsAuthority + 'account/register', model).pipe(catchError(this.handleError));
+    return this.http.post<RegistrationModel>(environment.stsAuthority + 'account/register', model, { observe: "response" }).pipe(catchError(this.handleError));
   }
 
   logout() {
