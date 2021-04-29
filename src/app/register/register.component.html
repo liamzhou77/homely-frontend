@@ -1,6 +1,6 @@
 <mat-progress-spinner mode="indeterminate" *ngIf="showSpinner"></mat-progress-spinner>
     <div class="form-title">Create an Account</div>
-  <form class="my-form" [formGroup]="registrationForm" (ngSubmit) = "register(registrationForm.value)">
+  <form *ngIf="showForm" class="my-form" [formGroup]="registrationForm" (ngSubmit) = "register(registrationForm.value)">
      <mat-form-field class="full-width">
          <mat-label>UserName</mat-label>
             <input  matInput  placeholder="UserName"  name="UserName"  required formControlName="UserName">
@@ -11,14 +11,17 @@
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input  matInput  placeholder="Password"  name="Password" formControlName="Password">
+            <input type="password"  matInput  placeholder="Password"  name="Password" formControlName="Password">
          </mat-form-field>
         <mat-form-field class="full-width">
             <mat-label>Confirm Password</mat-label>
-            <input  matInput  placeholder="Confirm Password"  name="ConfirmPassword" formControlName="ConfirmPassword">
+            <input type="password" matInput  placeholder="Confirm Password"  name="ConfirmPassword" formControlName="ConfirmPassword">
          </mat-form-field>
      <mat-card-actions>
       <button id="register-button" mat-raised-button color="primary" type="submit" value="submit">REGISTER</button>
    </mat-card-actions>
 
   </form>
+
+
+<p *ngIf="showSuccessMessage">Success!</p>

@@ -13,6 +13,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   success: boolean;
   error: string;
+  showForm: boolean = true;
+  showSuccessMessage: boolean = false;
   registrationModel: RegistrationModel = { UserName: '', Email: '', Password: '', ConfirmPassword: '' };
   submitted: boolean = false;
   showSpinner: boolean = false;
@@ -47,17 +49,18 @@ export class RegisterComponent implements OnInit {
 
   register(data: any) {
     this.showSpinner = true;
-    document.getElementById("overlay").style.opacity = ".5";
 
     this._authService.register(data)
       .pipe(finalize(() => {
         this.showSpinner = false;
-        document.getElementById("overlay").style.opacity = "1";
       }))  
       .subscribe(
           (result: any) => {         
          if(result) {
            this.success = true;
+           this.showForm = false;
+           this.showSuccessMessage = true;
+
          }
       },
           (error: string) => {
