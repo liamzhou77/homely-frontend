@@ -11,16 +11,14 @@ import { RegisterComponent } from './register/register.component';
 })
 export class AppComponent {
   title = 'homely';
-  isLoggedIn = false;
+  isLoggedIn = true;
   user: User;
 
-
-  constructor(private _authService: AuthService, private  dialog:  MatDialog) {
+  constructor(private _authService: AuthService, private dialog: MatDialog) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
     });
-
   }
 
   ngOnInit(): void {
@@ -30,8 +28,6 @@ export class AppComponent {
     });
   }
 
-
-  
   login() {
     this._authService.login();
   }
@@ -41,6 +37,8 @@ export class AppComponent {
   }
 
   register() {
-    this.dialog.open(RegisterComponent,  { panelClass: 'custom-dialog-container' });
+    this.dialog.open(RegisterComponent, {
+      panelClass: 'custom-dialog-container',
+    });
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,18 +13,14 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { MaterialModule } from './material.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UnauthorizedComponent,
-  ],
+  declarations: [AppComponent, UnauthorizedComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
     DashboardModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [
     AuthService,
@@ -34,8 +29,8 @@ import { MaterialModule } from './material.module';
       useClass: AuthInterceptorService,
       multi: true,
     },
-    AuthGuard
-],
+    AuthGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

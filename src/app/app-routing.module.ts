@@ -15,31 +15,31 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'calendar',
     loadChildren: () =>
       import('./calendar/calendar.module').then((m) => m.CalendarModule),
-     canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'budget',
     loadChildren: () =>
       import('./budget/budget.module').then((m) => m.BudgetModule),
-     canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'meals',
     loadChildren: () =>
       import('./meals/meals.module').then((m) => m.MealsModule),
-     canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'tasks',
     loadChildren: () =>
       import('./tasks/tasks.module').then((m) => m.TasksModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'register',

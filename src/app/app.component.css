@@ -7,10 +7,12 @@ mat-sidenav-container {
 }
 
 mat-sidenav-content {
-  background-color: #ffffff;
-  background-image:  radial-gradient(#9dc88d 1.05px, transparent 1.05px), radial-gradient(#9dc88d 1.05px, #ffffff 1.05px);
+  background-color: #f1f3f5;
+  /* background-image: radial-gradient(#9dc88d 1.05px, transparent 1.05px),
+    radial-gradient(#9dc88d 1.05px, #ffffff 1.05px);
   background-size: 42px 42px;
-  background-position: 0 0,21px 21px;
+  background-position: 0 0, 21px 21px; */
+  margin-left: 241px;
 }
 
 /* nav */
@@ -52,7 +54,7 @@ mat-sidenav {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding:11px;
+  padding: 11px;
   padding-left: 31px;
   padding-right: 31px;
   border-radius: 23.5px 23.5px 23.5px 23.5px;
@@ -61,12 +63,12 @@ mat-sidenav {
 }
 
 .top-bar-item-button:hover {
-  background: #9DC88D;
-  opacity: .9;
+  background: #9dc88d;
+  opacity: 0.9;
 }
 
 .top-bar-item-button.active {
-  background: #9DC88D;
+  background: #9dc88d;
   opacity: 1;
   cursor: default;
 }
@@ -76,11 +78,11 @@ mat-sidenav {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: #9DC88D;
-  opacity: .7;
+  background: #9dc88d;
+  opacity: 0.7;
   width: 100px;
 
-  padding:11px;
+  padding: 11px;
   padding-left: 31px;
   padding-right: 31px;
   border-radius: 23.5px 23.5px 23.5px 23.5px;
@@ -97,9 +99,8 @@ mat-sidenav {
   cursor: default;
 }
 
-
 .top-bar-text {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .side-nav-text {
@@ -167,23 +168,19 @@ mat-sidenav {
   right: 4vw;
 }
 
-
-
 #top-bar-list-loggedout {
-    /* Frame 82 */
-/* Auto Layout */
+  /* Frame 82 */
+  /* Auto Layout */
 
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: flex-start;
-padding: 10.5px 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10.5px 50px;
 
-position: absolute;
-width: 623px;
-height: 79px;
-left: 4vw;
-top: 3vh;
+  position: absolute;
+  width: 623px;
+  height: 79px;
+  left: 4vw;
+  top: 3vh;
 }
-
-
