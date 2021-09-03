@@ -75,7 +75,7 @@
       <span class="side-nav-text">Logout</span>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content [style.margin-left]="sidenavContentLeftMargin">
     <div id="top-bar" *ngIf="isLoggedIn">
       <div id="top-bar-list">
         <span class="font-lg">Welcome Liam!</span>

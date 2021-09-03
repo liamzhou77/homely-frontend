@@ -11,13 +11,15 @@ import { RegisterComponent } from './register/register.component';
 })
 export class AppComponent {
   title = 'homely';
-  isLoggedIn = true;
+  isLoggedIn = false;
   user: User;
+  sidenavContentLeftMargin: string;
 
   constructor(private _authService: AuthService, private dialog: MatDialog) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
+      this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
   }
 
@@ -25,6 +27,7 @@ export class AppComponent {
     this._authService.isLoggedIn().then((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
+      this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
   }
 
