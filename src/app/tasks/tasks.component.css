@@ -1,0 +1,53 @@
+.tasks-header {
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.tasks-card {
+  border-radius: 15px;
+  padding: 13px 14px;
+  background-color: #fff;
+  margin-bottom: 1rem;
+}
+
+.tasks-info {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+  width: 22px;
+  height: 22px;
+  margin-right: 1rem;
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-frame,
+mat-checkbox ::ng-deep .mat-checkbox-background {
+  border-radius: 7px;
+}
+
+#tasks-container {
+  width: 700px;
+  margin: 0 auto;
+  padding-top: 64px;
+}
+
+#tasks-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 11px;
+
+  height: 40px;
+  background: rgba(157, 200, 141, 0.6);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+#tasks-input {
+  border: none;
+  background: transparent;
+  outline: 0;
+  width: 100%;
+  margin-left: 8px;
+}

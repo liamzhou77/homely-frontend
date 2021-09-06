@@ -1,1 +1,35 @@
-<p>tasks works!</p>
+<div id="tasks-container">
+  <div id="tasks-input-container">
+    <span
+      class="iconify icon"
+      data-inline="false"
+      data-icon="ic:outline-add"
+    ></span>
+    <input
+      id="tasks-input"
+      class="font-lg"
+      placeholder="Buy Grocery"
+      autofocus
+      [(ngModel)]="inputValue"
+      (keydown.enter)="addTask($event)"
+    />
+  </div>
+  <div class="tasks-header">Tasks - {{ incompletedTasks?.length }}</div>
+  <div class="tasks-card" *ngIf="inputValue" style="opacity: 0.5">
+    <mat-checkbox>{{ inputValue }}</mat-checkbox>
+  </div>
+  <div class="tasks-card" *ngFor="let task of incompletedTasks">
+    <mat-checkbox (change)="setCompleted(task)">
+      {{ task.todoDescription }}
+    </mat-checkbox>
+  </div>
+  <div class="tasks-header">Completed - {{ completedTasks?.length }}</div>
+  <div class="tasks-card" *ngFor="let task of completedTasks">
+    <mat-checkbox
+      style="text-decoration: line-through"
+      (change)="setCompleted(task)"
+      [checked]="true"
+      >{{ task.todoDescription }}</mat-checkbox
+    >
+  </div>
+</div>

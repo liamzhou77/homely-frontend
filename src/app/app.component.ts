@@ -13,25 +13,24 @@ export class AppComponent {
   title = 'homely';
   isLoggedIn = false;
   user: User;
+  sidenavContentLeftMargin: string;
 
-
-  constructor(private _authService: AuthService, private  dialog:  MatDialog) {
+  constructor(private _authService: AuthService, private dialog: MatDialog) {
     this._authService.loginChanged.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
+      this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
-
   }
 
   ngOnInit(): void {
     this._authService.isLoggedIn().then((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
+      this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
   }
 
-
-  
   login() {
     this._authService.login();
   }
@@ -41,6 +40,8 @@ export class AppComponent {
   }
 
   register() {
-    this.dialog.open(RegisterComponent,  { panelClass: 'custom-dialog-container' });
+    this.dialog.open(RegisterComponent, {
+      panelClass: 'custom-dialog-container',
+    });
   }
 }

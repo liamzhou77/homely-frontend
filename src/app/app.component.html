@@ -66,11 +66,7 @@
         <span class="side-nav-text">Settings</span>
       </div> -->
     </div>
-    <div
-      id="side-nav-bottom-1"
-      class="side-nav-item"
-      (click)="logout()"
-    >
+    <div id="side-nav-bottom-1" class="side-nav-item" (click)="logout()">
       <span
         class="iconify nav-icon"
         data-inline="false"
@@ -79,10 +75,10 @@
       <span class="side-nav-text">Logout</span>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content [style.margin-left]="sidenavContentLeftMargin">
     <div id="top-bar" *ngIf="isLoggedIn">
       <div id="top-bar-list">
-        <span class="font-lg">Welcome {{this.user.profile.name}}</span>
+        <span class="font-lg">Welcome Liam!</span>
         <span
           class="iconify nav-icon"
           data-inline="false"
@@ -93,16 +89,18 @@
         </div>
       </div>
     </div>
-     <div id="brand"
-         class="primary-color-dark"
-         routerLink="/dashboard"
-         routerLinkActive="active"
-          *ngIf="!isLoggedIn">
+    <div
+      id="brand"
+      class="primary-color-dark"
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      *ngIf="!isLoggedIn"
+    >
       Hestia
     </div>
     <div id="top-bar" *ngIf="!isLoggedIn">
       <div id="top-bar-list">
-        <div class="top-bar-item-button"  (click)="register()">
+        <div class="top-bar-item-button" (click)="register()">
           <span class="top-bar-text">Register</span>
         </div>
         <div class="top-bar-item-button" (click)="login()">
@@ -113,7 +111,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-

@@ -1,6 +1,6 @@
-
 body {
   font-family: Montserrat, sans-serif;
+  font-size: 14px;
 }
 
 .font-lg {
@@ -13,6 +13,11 @@ body {
 
 .font-sm {
   font-size: 12px;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
 }
 
 .primary-color-dark {
@@ -46,8 +51,7 @@ body {
   width: auto;
 }
 
-
-.mat-progress-spinner {
+mat-progress-spinner {
   display: block !important;
   position: fixed !important;
   z-index: 1031; /* High z-index so it is on top of the page */
@@ -55,16 +59,13 @@ body {
   left: 50%; /* or: left: 50%; */
   margin-left: -50px;
   margin-top: -50px;
- }
+}
 
 mat-form-field {
   width: 25vw;
 }
 
 .custom-dialog-container .mat-dialog-container {
-    width: 30vw;
-    height: 45vh;
-    top: 50%;
-    right: 50%;
-
+  width: 30vw;
+  height: 45vh;
 }
