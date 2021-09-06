@@ -1,0 +1,43 @@
+
+<form [formGroup]="eventForm">
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Title of Event" formControlName="title">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Description of Event" formControlName="description">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <mat-form-field>
+      <input matInput type="datetime-local" placeholder="Start Date" formControlName="start">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput type="datetime-local" placeholder="End Date" formControlName="end">
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-raised-button type="submit"
+          color="primary"
+          mat-dialog-close
+          (click)="submitEvent()">
+    Submit
+  </button>
+
+  <button id="delete-button" mat-raised-button type="submit"
+          color="warn"
+          mat-dialog-close
+          (click)="deleteEvent()">
+    Delete Event
+  </button>
+</form>
+

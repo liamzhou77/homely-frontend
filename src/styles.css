@@ -57,6 +57,10 @@ body {
   margin-top: -50px;
  }
 
+mat-form-field {
+  width: 25vw;
+}
+
 .custom-dialog-container .mat-dialog-container {
     width: 30vw;
     height: 45vh;

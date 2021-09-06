@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, EventInput, EventSourceInput, FullCalendarComponent } from '@fullcalendar/angular';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from '../core/auth-service.component';
+import { ICalendarEventDto } from '../shared/dtos/calendar-event-dto';
+import { CalendarClient } from '../shared/restClients/calendar-client';
+import { AddEditCalendarEventComponent } from './add-edit-calendar-event/add-edit-calendar-event.component';
+import { EditCalendarEventComponent } from './edit-calendar-event/edit-calendar-event.component';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 
 @Component({
@@ -7,7 +14,15 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(FullCalendarComponent) calendarComponent: FullCalendarComponent;
+
+
+  retrievedEvents: EventInput[] = [];
+  currentEvents: EventApi[] = []; //call to api to get events
+
+
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
     headerToolbar: {
@@ -16,7 +31,7 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    initialEvents: this.retrievedEvents, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -24,7 +39,7 @@ export class CalendarComponent implements OnInit {
     dayMaxEvents: true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -34,12 +49,39 @@ export class CalendarComponent implements OnInit {
 
 
 
-  constructor() { }
-
-  ngOnInit(): void { }
 
 
-  currentEvents: EventApi[] = [];
+
+
+  constructor(private modalService: MatDialog, private calendarClient: CalendarClient, private authService: AuthService) { }
+
+  ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.authService.refreshUserInfo().then(() => {
+
+      this.calendarClient.getEvents(this.authService.userId, this.authService.householdId).subscribe(events => {
+        events.forEach(event => {
+          this.calendarComponent.getApi().addEvent({
+            id: event.eventId.toString(),
+            householdId: event.householdId,
+            creatorId: event.creatorId,
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            description: event.description,
+            color: event.color,
+            allDay: event.allDay
+          })
+        })
+
+      })
+
+    })
+  }
+
+
 
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
@@ -51,31 +93,71 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
+    const modalRef = this.modalService.open(AddEditCalendarEventComponent, { data: selectInfo });
+    let newEvent: ICalendarEventDto = null;
+    modalRef.afterClosed().subscribe(() => {
+      newEvent = modalRef.componentInstance.event;
+      const calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // clear date selection
+      calendarApi.unselect(); // clear date selection
 
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+      if (newEvent) {
+        calendarApi.addEvent({
+          id: newEvent.eventId.toString(),
+          creatorId: newEvent.creatorId,
+          householdId: newEvent.householdId,
+          title: newEvent.title,
+          start: newEvent.start,
+          end: newEvent.end,
+          allDay: newEvent.allDay,
+          description: newEvent.description
+        });
+      }
+
+    });
+
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+
+    let selectedEvent: ICalendarEventDto = {
+      eventId: parseInt(clickInfo.event.id),
+      householdId: clickInfo.event.extendedProps.householdId,
+      creatorId: clickInfo.event.extendedProps.creatorId,
+      title: clickInfo.event.title,
+      description: clickInfo.event.extendedProps.description,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+      color: clickInfo.event.backgroundColor,
+      allDay: clickInfo.event.allDay
+    };
+
+    const modalRef = this.modalService.open(EditCalendarEventComponent, { data: selectedEvent });
+
+    modalRef.afterClosed().subscribe(() => {
+      selectedEvent = modalRef.componentInstance.event;
+
+      if (selectedEvent) {
+        clickInfo.event.remove();
+        clickInfo.view.calendar.addEvent({
+          id: selectedEvent.eventId.toString(),
+          householdId: selectedEvent.householdId,
+          creatorId: selectedEvent.creatorId,
+          title: selectedEvent.title,
+          start: selectedEvent.start,
+          end: selectedEvent.end,
+          allDay: selectedEvent.allDay,
+          description: selectedEvent.description
+        });
+      }
+      else {
+        clickInfo.event.remove();
+      }
+
+    });
   }
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
   }
-
-
 }

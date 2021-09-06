@@ -6,11 +6,14 @@ import { environment } from "../../environments/environment";
 import { HttpClient } from '@angular/common/http';
 import { catchError } from "rxjs/operators";
 import { RegistrationModel } from "../shared/models/registrationModel";
+import { UserClient } from "../shared/restClients/user-client";
 
 
 @Injectable()
 export class AuthService {
   private _user: User;
+  userId: number;
+  householdId: number;
 
   get user(): User {
     return this._user;
@@ -21,7 +24,7 @@ export class AuthService {
 
   loginChanged = this._loginChangedSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userClient: UserClient) {
    
     const stsSettings = {
       authority: environment.stsAuthority,
@@ -36,8 +39,16 @@ export class AuthService {
 
       this._userManager.getUser().then(user => {
         this._user = user;
-        console.log(user);
-        });
+        
+      });
+
+  }
+
+  refreshUserInfo(): Promise<void> {
+    return this.userClient.getUserInfo(this._user.profile.preferred_username).toPromise().then(userInfo => {
+      this.userId = userInfo.userID;
+      this.householdId = userInfo.householdId;
+    })
   }
 
   login() {
@@ -47,12 +58,10 @@ export class AuthService {
   isLoggedIn(): Promise<boolean> {
     return this._userManager.getUser().then((user) => {
       const userCurrent = !!user && !user.expired;
-      console.log("this user?", user);
       if (this._user !== user) {
         this._loginChangedSubject.next(userCurrent);
       }
       this._user = user;
-      
       return userCurrent;
     });
   }
