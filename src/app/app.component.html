@@ -78,7 +78,7 @@
   <mat-sidenav-content [style.margin-left]="sidenavContentLeftMargin">
     <div id="top-bar" *ngIf="isLoggedIn">
       <div id="top-bar-list">
-        <span class="font-lg">Welcome Liam!</span>
+        <span class="font-lg">Welcome {{user.profile.preferred_username}}!</span>
         <span
           class="iconify nav-icon"
           data-inline="false"
