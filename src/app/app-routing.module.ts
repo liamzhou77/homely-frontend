@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthWithoutHouseholdGuard } from './core/auth-without-household.guard';
+import { AuthWithHouseholdGuard } from './core/auth-with-household.guard';
+import { CreateHouseholdComponent } from './create-household/create-household.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback/signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,31 +17,31 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthWithHouseholdGuard],
   },
   {
     path: 'calendar',
     loadChildren: () =>
       import('./calendar/calendar.module').then((m) => m.CalendarModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthWithHouseholdGuard],
   },
   {
     path: 'budget',
     loadChildren: () =>
       import('./budget/budget.module').then((m) => m.BudgetModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthWithHouseholdGuard],
   },
   {
     path: 'meals',
     loadChildren: () =>
       import('./meals/meals.module').then((m) => m.MealsModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthWithHouseholdGuard],
   },
   {
     path: 'tasks',
     loadChildren: () =>
       import('./tasks/tasks.module').then((m) => m.TasksModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthWithHouseholdGuard],
   },
   {
     path: 'register',
@@ -57,6 +59,11 @@ const routes: Routes = [
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
+  },
+  {
+    path: 'create-household',
+    component: CreateHouseholdComponent,
+    canActivate: [AuthWithoutHouseholdGuard],
   },
 ];
 

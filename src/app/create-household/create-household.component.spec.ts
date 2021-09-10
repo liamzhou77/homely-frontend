@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CreateHouseholdComponent } from './create-household.component';
 
-import { EditCalendarEventComponent } from './edit-calendar-event.component';
-
-describe('EditCalendarEventComponent', () => {
-  let component: EditCalendarEventComponent;
-  let fixture: ComponentFixture<EditCalendarEventComponent>;
+describe('CreateHouseholdComponent', () => {
+  let component: CreateHouseholdComponent;
+  let fixture: ComponentFixture<CreateHouseholdComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditCalendarEventComponent],
+      declarations: [CreateHouseholdComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditCalendarEventComponent);
+    fixture = TestBed.createComponent(CreateHouseholdComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

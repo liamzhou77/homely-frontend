@@ -41,6 +41,12 @@ export class AuthService {
   }
 
   refreshUserInfo(): Promise<void> {
+    if (!this._user) {
+      this.userId = undefined;
+      this.householdId = undefined;
+      return Promise.resolve();
+    }
+
     return this.userClient
       .getUserInfo(this._user.profile.preferred_username)
       .toPromise()
@@ -88,7 +94,7 @@ export class AuthService {
   }
 
   completeLogout() {
-    this._user = null;
+    this._user = undefined;
     return this._userManager.signoutRedirectCallback();
   }
 
@@ -97,7 +103,7 @@ export class AuthService {
       if (!!user && !user.expired) {
         return user.access_token;
       } else {
-        return null;
+        return undefined;
       }
     });
   }
@@ -118,7 +124,7 @@ export class AuthService {
         modelStateErrors += error.error[key].description + '\n';
     }
 
-    modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
+    modelStateErrors = modelStateErrors = '' ? undefined : modelStateErrors;
     return throwError(modelStateErrors || 'Server error');
   }
 }

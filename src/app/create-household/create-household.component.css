@@ -1,0 +1,35 @@
+#create-household-header {
+  font-size: 40px;
+}
+
+#create-household-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 1000px;
+}
+
+#create-household-image {
+  width: 300px;
+  height: 300px;
+}
+
+#create-household-name-input {
+  text-align: center;
+}
+
+mat-form-field.mat-form-field {
+  font-size: 18px;
+  width: 300px;
+}
+
+#create-household-form {
+  margin: 18px auto;
+  width: 300px;
+}
+
+#create-household-subheader {
+  font-size: 20px;
+}
