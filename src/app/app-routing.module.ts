@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback/signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { NoAuthGuard } from './core/no-auth.guard';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
+    canActivate: [NoAuthGuard],
   },
   {
     path: 'create-household',

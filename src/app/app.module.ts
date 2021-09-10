@@ -11,6 +11,7 @@ import { AuthWithHouseholdGuard } from './core/auth-with-household.guard';
 import { CreateHouseholdComponent } from './create-household/create-household.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material.module';
+import { NoAuthGuard } from './core/no-auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     },
     AuthWithoutHouseholdGuard,
     AuthWithHouseholdGuard,
+    NoAuthGuard,
   ],
   bootstrap: [AppComponent],
 })
