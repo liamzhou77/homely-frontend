@@ -14,6 +14,7 @@ export class AppComponent {
   isLoggedIn = false;
   user: User;
   sidenavContentLeftMargin: string;
+  householdId: number;
 
   constructor(private _authService: AuthService, private dialog: MatDialog) {
     this._authService.loginChanged.subscribe((loggedIn) => {
@@ -21,6 +22,7 @@ export class AppComponent {
       this.user = this._authService.user;
       this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
+    this.householdId = _authService.householdId;
   }
 
   ngOnInit(): void {

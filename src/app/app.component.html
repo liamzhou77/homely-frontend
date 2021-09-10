@@ -8,7 +8,7 @@
     >
       Hestia
     </div>
-    <div id="side-nav-list">
+    <div id="side-nav-list" *ngIf="householdId !== undefined">
       <div
         class="side-nav-item"
         routerLink="/dashboard"
@@ -78,7 +78,9 @@
   <mat-sidenav-content [style.margin-left]="sidenavContentLeftMargin">
     <div id="top-bar" *ngIf="isLoggedIn">
       <div id="top-bar-list">
-        <span class="font-lg">Welcome {{user.profile.preferred_username}}!</span>
+        <span class="font-lg"
+          >Welcome {{ user.profile.preferred_username }}!</span
+        >
         <span
           class="iconify nav-icon"
           data-inline="false"
