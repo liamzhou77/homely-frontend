@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthWithoutHouseholdGuard } from './core/auth-without-household.guard';
 import { AuthWithHouseholdGuard } from './core/auth-with-household.guard';
+import { AuthWithoutHouseholdGuard } from './core/auth-without-household.guard';
+import { NoAuthGuard } from './core/no-auth.guard';
 import { CreateHouseholdComponent } from './create-household/create-household.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback/signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback/signout-redirect-callback.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { NoAuthGuard } from './core/no-auth.guard';
 
 const routes: Routes = [
   {
@@ -42,6 +42,12 @@ const routes: Routes = [
     path: 'tasks',
     loadChildren: () =>
       import('./tasks/tasks.module').then((m) => m.TasksModule),
+    canActivate: [AuthWithHouseholdGuard],
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
     canActivate: [AuthWithHouseholdGuard],
   },
   {
