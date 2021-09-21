@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterComponent } from './register.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from  '../material.module';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RegisterRoutingModule } from './register-routing.module';
-
+import { RegisterComponent } from './register.component';
 
 @NgModule({
-  declarations: [
-    RegisterComponent,
-  ],
+  declarations: [RegisterComponent],
   imports: [
     CommonModule,
-    MaterialModule,
     RegisterRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+  ],
 })
-export class RegisterModule { }
+export class RegisterModule {}

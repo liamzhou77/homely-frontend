@@ -1,19 +1,21 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { AuthService } from './core/auth-service.component';
-import { AuthWithoutHouseholdGuard } from './core/auth-without-household.guard';
 import { AuthWithHouseholdGuard } from './core/auth-with-household.guard';
+import { AuthWithoutHouseholdGuard } from './core/auth-without-household.guard';
+import { NoAuthGuard } from './core/no-auth.guard';
 import { CreateHouseholdComponent } from './create-household/create-household.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { MaterialModule } from './material.module';
-import { NoAuthGuard } from './core/no-auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, UnauthorizedComponent, CreateHouseholdComponent],
@@ -23,8 +25,10 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     DashboardModule,
     HttpClientModule,
-    MaterialModule,
     FormsModule,
+    MatFormFieldModule,
+    MatSidenavModule,
+    MatDialogModule,
   ],
   providers: [
     AuthService,
