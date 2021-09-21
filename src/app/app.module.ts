@@ -13,6 +13,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material.module';
 import { NoAuthGuard } from './core/no-auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, UnauthorizedComponent, CreateHouseholdComponent],
@@ -23,6 +24,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     DashboardModule,
     HttpClientModule,
     MaterialModule,
+    FormsModule,
   ],
   providers: [
     AuthService,

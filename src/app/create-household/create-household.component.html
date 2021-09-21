@@ -11,8 +11,10 @@
       <mat-label>Name</mat-label>
       <input
         id="create-household-name-input"
+        name="name"
         matInput
-        placeholder="Liam's Family"
+        [(ngModel)]="householdName"
+        placeholder="{{ username }}'s Family"
       />
     </mat-form-field>
     <br />
@@ -21,6 +23,7 @@
       mat-raised-button
       type="button"
       color="primary"
+      (click)="createHousehold()"
     >
       Submit
     </button>

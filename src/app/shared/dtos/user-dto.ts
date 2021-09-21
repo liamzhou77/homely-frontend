@@ -3,5 +3,5 @@ export interface IUserDto {
   householdID?: number;
   firstName: string;
   lastName: string;
-  userName: string;
+  username: string;
 }
