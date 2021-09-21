@@ -36,7 +36,7 @@ export class AuthWithHouseholdGuard implements CanActivate {
           });
           return false;
         }
-        if (this.authService.householdId === undefined) {
+        if (this.authService.householdId === null) {
           this.router.navigate(['create-household']);
           return false;
         }

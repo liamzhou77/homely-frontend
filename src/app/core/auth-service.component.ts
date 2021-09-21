@@ -22,10 +22,16 @@ export class AuthService {
 
   private _userManager: UserManager;
   private _loginChangedSubject = new Subject<boolean>();
+  private _householdChangedSubject = new Subject<boolean>();
 
   loginChanged = this._loginChangedSubject.asObservable();
+  householdChanged = this._householdChangedSubject.asObservable();
 
-  constructor(private http: HttpClient, private userClient: UserClient, private householdClient: HouseholdClient) {
+  constructor(
+    private http: HttpClient,
+    private userClient: UserClient,
+    private householdClient: HouseholdClient
+  ) {
     const stsSettings = {
       authority: environment.stsAuthority,
       client_id: environment.clientId,
@@ -42,12 +48,11 @@ export class AuthService {
     });
   }
 
-
   refreshUserInfo(): Promise<void> {
     if (!this._user) {
       this.userId = undefined;
-      this.householdId = undefined;
-      this.householdMembers = undefined;
+      this.householdId = null;
+      this.householdMembers = null;
       return Promise.resolve();
     }
 
@@ -56,7 +61,11 @@ export class AuthService {
       .toPromise()
       .then((userInfo) => {
         this.userId = userInfo.userID;
+        const oldHouseholdId = this.householdId;
         this.householdId = userInfo.householdID;
+        if (oldHouseholdId !== this.householdId) {
+          this._householdChangedSubject.next(true);
+        }
       });
   }
 
@@ -79,6 +88,7 @@ export class AuthService {
     return this._userManager.signinRedirectCallback().then((user) => {
       this._user = user;
       this._loginChangedSubject.next(!!this._user && !this._user.expired);
+      this.refreshUserInfo();
       return this._user;
     });
   }
