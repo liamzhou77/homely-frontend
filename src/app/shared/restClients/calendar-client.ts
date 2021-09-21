@@ -23,10 +23,11 @@ export class CalendarClient {
       return this.client.get<ICalendarEventDto[]>(this.baseUrl + `Event/${userId}/${householdId}`);
   }
 
-  createEvent(householdId: number, creatorId: number, title: string, description: string, color: string, allDay?: boolean, start?: Date, end?: Date) {
+  createEvent(householdId: number, creatorId: number, assignees: number[], title: string, description: string, color: string, allDay?: boolean, start?: Date, end?: Date) {
     let body = {
       householdId,
       creatorId,
+      assignees,
       start,
       end,
       title,
@@ -34,9 +35,33 @@ export class CalendarClient {
       color: "",
       allDay
     }
-    console.log(body)
     return this.client.post<ICalendarCreateResponseDto>(this.baseUrl + "Event", body);
   }
+
+  updateEvent(eventId: number, householdId: number, creatorId: number, assignees: number[], title: string, description: string, color: string, allDay?: boolean, start?: Date, end?: Date) {
+    let body = {
+      eventId,
+      householdId,
+      creatorId,
+      assignees,
+      start,
+      end,
+      title,
+      description,
+      color: color,
+      allDay
+    }
+
+    return this.client.put<any>(this.baseUrl + "Event", body);
+  }
+
+  deleteEvent(eventId: number) {
+    let params = new HttpParams();
+    params = params.append("eventID", eventId);
+    return this.client.delete(this.baseUrl + 'Event', { params: params });
+
+  }
+
 
   //getApplicantNames(accountId: number): Observable<IApplicantNameDto[]> {
   //  return this.client.get<IApplicantNameDto[]>(this.baseUrl + `/Accounts/${accountId}/ApplicantNames`);

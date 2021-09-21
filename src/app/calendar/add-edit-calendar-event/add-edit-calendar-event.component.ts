@@ -7,7 +7,9 @@ import { CalendarApi, DateSelectArg, EventApi, EventSourceApi } from '@fullcalen
 import format from 'date-fns/format';
 import { AuthService } from '../../core/auth-service.component';
 import { ICalendarEventDto } from '../../shared/dtos/calendar-event-dto';
+import { IUserDto } from '../../shared/dtos/user-dto';
 import { CalendarClient } from '../../shared/restClients/calendar-client';
+import { HouseholdClient } from '../../shared/restClients/household-client';
 
 @Component({
   selector: 'app-add-edit-calendar-event',
@@ -19,12 +21,21 @@ export class AddEditCalendarEventComponent implements OnInit {
   event: ICalendarEventDto;
   myDatePicker: NgxMatDatetimePicker<Date>;
   eventForm: FormGroup;
+  selectedColor: string = "#33658A";
+  householdMembers: IUserDto[]; //temp
+
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DateSelectArg,
     private dialogRef: MatDialogRef<AddEditCalendarEventComponent>,
     private calendarClient: CalendarClient,
-    private authService: AuthService) {
-    console.log(data)
+    private authService: AuthService,
+    private householdClient: HouseholdClient) {
+    this.authService.refreshUserInfo().then(() => {
+      this.householdClient.getHouseholdMembers(this.authService.householdId).subscribe(members => {
+        this.householdMembers = members;
+      })
+    })
+
   }
 
   ngOnInit(): void {
@@ -32,29 +43,40 @@ export class AddEditCalendarEventComponent implements OnInit {
       title: new FormControl(),
       start: new FormControl(),
       end: new FormControl(),
-      description: new FormControl()
+      description: new FormControl(),
+      allDay: new FormControl(false),
+      color: new FormControl(this.selectedColor),
+      assignees: new FormControl([])
     });
-    this.eventForm.controls.start.setValue(format(this.data.start, "yyyy-MM-dd'T'hh:mm"));
-    this.eventForm.controls.end.setValue(format(this.data.end, "yyyy-MM-dd'T'hh:mm"));
+    this.eventForm.controls.start.setValue(format(this.data.start, "yyyy-MM-dd'T'HH:mm"));
+    this.eventForm.controls.end.setValue(format(this.data.end, "yyyy-MM-dd'T'HH:mm"));
+    this.eventForm.valueChanges.subscribe(() => {
+      this.selectedColor = this.eventForm.controls.color.value;
+    })
   }
 
   submitEvent(): void {
 
     this.event = {
-      householdId: 1,
-      creatorId: 11,
+      householdId: this.authService.householdId,
+      creatorId: this.authService.userId,
       start: this.eventForm.controls.start.value,
       end: this.eventForm.controls.end.value,
-      allDay: false,
+      allDay: this.eventForm.controls.allDay.value, 
       title: this.eventForm.controls.title.value,
-      description: this.eventForm.controls.description.value
+      description: this.eventForm.controls.description.value,
+      color: this.selectedColor,
+      assignees: this.eventForm.controls.assignees.value
     }
 
-    this.calendarClient.createEvent(this.authService.householdId, this.authService.userId, this.event.title, this.event.description, this.event.color, this.event.allDay, this.event.start, this.event.end).subscribe(response => {
+    this.calendarClient.createEvent(this.authService.householdId, this.authService.userId, this.event.assignees, this.event.title, this.event.description, this.event.color, this.event.allDay, this.event.start, this.event.end).subscribe(response => {
       this.event.eventId = response.id;
       this.dialogRef.close();
     })
+  }
 
+  changeColor(): void {
+    this.selectedColor = this.eventForm.controls.color.value;
   }
 
 }

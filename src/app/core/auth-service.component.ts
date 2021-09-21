@@ -7,12 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { RegistrationModel } from '../shared/models/registrationModel';
 import { UserClient } from '../shared/restClients/user-client';
+import { HouseholdClient } from '../shared/restClients/household-client';
 
 @Injectable()
 export class AuthService {
   private _user: User;
   userId: number;
   householdId: number;
+  householdMembers: number[];
 
   get user(): User {
     return this._user;
@@ -23,7 +25,7 @@ export class AuthService {
 
   loginChanged = this._loginChangedSubject.asObservable();
 
-  constructor(private http: HttpClient, private userClient: UserClient) {
+  constructor(private http: HttpClient, private userClient: UserClient, private householdClient: HouseholdClient) {
     const stsSettings = {
       authority: environment.stsAuthority,
       client_id: environment.clientId,
@@ -40,10 +42,12 @@ export class AuthService {
     });
   }
 
+
   refreshUserInfo(): Promise<void> {
     if (!this._user) {
       this.userId = undefined;
       this.householdId = undefined;
+      this.householdMembers = undefined;
       return Promise.resolve();
     }
 
@@ -52,7 +56,7 @@ export class AuthService {
       .toPromise()
       .then((userInfo) => {
         this.userId = userInfo.userID;
-        this.householdId = userInfo.householdId;
+        this.householdId = userInfo.householdID;
       });
   }
 

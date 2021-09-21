@@ -25,6 +25,32 @@
         <input matInput type="datetime-local" placeholder="End Date" formControlName="end">
       </mat-form-field>
     </div>
+    <div class="row">
+      <div class="col">
+        <mat-checkbox formControlName="allDay">All Day Event</mat-checkbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill" style="width: 75%">
+          <mat-label [style.color]="selectedColor">Choose a Color</mat-label>
+          <mat-select formControlName="color" (click)="changeColor()">
+            <mat-option value="#33658A" style="background-color: #33658A !important"></mat-option>
+            <mat-option value="#86BBD8" style="background-color: #86BBD8 !important"></mat-option>
+            <mat-option value="#9DC88D" style="background-color: #9DC88D !important"></mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span id="colorDisplay" [style.background-color]="selectedColor"></span>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="assignees" multiple>
+          <mat-button-toggle value="bold" *ngFor="let member of householdMembers" [value]="member.userID">{{member.username}}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
   </div>
   <button mat-raised-button type="submit"
           color="primary"

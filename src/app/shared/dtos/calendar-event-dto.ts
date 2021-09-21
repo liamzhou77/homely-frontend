@@ -2,6 +2,7 @@ export interface ICalendarEventDto {
   eventId?: number,
   householdId: number,
   creatorId: number,
+  assignees?: number[],
   start?: Date,
   end?: Date,
   title: string,

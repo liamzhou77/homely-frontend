@@ -1,7 +1,7 @@
 export interface IUserDto {
   userID?: number,
-  householdId?: number,
+  householdID?: number,
   firstName: string,
   lastName: string,
-  userName: string
+  username: string
 }

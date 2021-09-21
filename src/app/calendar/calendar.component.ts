@@ -72,7 +72,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             end: event.end,
             description: event.description,
             color: event.color,
-            allDay: event.allDay
+            allDay: event.allDay,
+            assignees: event.assignees
           })
         })
 
@@ -110,7 +111,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           start: newEvent.start,
           end: newEvent.end,
           allDay: newEvent.allDay,
-          description: newEvent.description
+          description: newEvent.description,
+          assignees: newEvent.assignees,
+          color: newEvent.color
         });
       }
 
@@ -126,11 +129,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       creatorId: clickInfo.event.extendedProps.creatorId,
       title: clickInfo.event.title,
       description: clickInfo.event.extendedProps.description,
-      start: clickInfo.event.start,
-      end: clickInfo.event.end,
+      start: new Date(clickInfo.event.start.toISOString()),
+      end: new Date(clickInfo.event.end.toISOString()),
       color: clickInfo.event.backgroundColor,
-      allDay: clickInfo.event.allDay
+      allDay: clickInfo.event.allDay,
+      assignees: clickInfo.event.extendedProps.assignees
     };
+
 
     const modalRef = this.modalService.open(EditCalendarEventComponent, { data: selectedEvent });
 
@@ -147,7 +152,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           start: selectedEvent.start,
           end: selectedEvent.end,
           allDay: selectedEvent.allDay,
-          description: selectedEvent.description
+          description: selectedEvent.description,
+          assignees: selectedEvent.assignees,
+          color: selectedEvent.color
         });
       }
       else {

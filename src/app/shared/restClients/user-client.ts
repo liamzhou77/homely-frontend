@@ -44,39 +44,4 @@ export class UserClient {
       body
     );
   }
-
-  //getApplicantNames(accountId: number): Observable<IApplicantNameDto[]> {
-  //  return this.client.get<IApplicantNameDto[]>(this.baseUrl + `/Accounts/${accountId}/ApplicantNames`);
-  //}
-
-  //getContactsInfo(accountId: number): Observable<IContactInfoDto[]> {
-  //  return this.client.get<IContactInfoDto[]>(this.baseUrl + `/Accounts/${accountId}/ContactInfo`);
-  //}
-
-  //getContactInfo(accountId: number, debtorId: number): Observable<IContactInfoDto> {
-  //  return this.client.get<IContactInfoDto>(this.baseUrl + `/Accounts/${accountId}/Debtors/${debtorId}/ContactInfo`);
-  //}
-
-  //getApplicant(accountId: number, debtorId: number): Observable<IApplicantDto> {
-  //  return this.client.get<IApplicantDto>(this.baseUrl + `/Accounts/${accountId}/Debtors/${debtorId}`);
-  //}
-
-  //getApplicationId(accountId: number): Observable<string> {
-  //  return this.client.get<string>(this.baseUrl + `/Accounts/${accountId}/ApplicationId`);
-  //}
-
-  //updateContactInfo(accountId: number, debtorId: number, contactInfo: IContactInfoDto, reason: string): Observable<any> {
-  //  let params = new HttpParams(); if (reason)
-  //    params = params.append("reason", reason);
-
-  //  return this.client.put(this.baseUrl + `/Accounts/${accountId}/Debtors/${debtorId}/ContactInfo`, contactInfo, { params });
-  //}
-
-  //updateApplicant(accountId: number, debtorId: number, applicantInfo: IApplicantDto, reason: string): Observable<any> {
-  //  let params = new HttpParams();
-  //  if (reason)
-  //    params = params.append("reason", reason);
-  //  const httpOptions = { params: params };
-
-  //  return this.client.put(this.baseUrl + `/Accounts/${accountId}/Debtors/${debtorId}`, applicantInfo, httpOptions);
 }
