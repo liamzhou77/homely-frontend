@@ -35,6 +35,7 @@ export class AuthWithHouseholdGuard implements CanActivate {
   ): Promise<boolean> {
     this.isLoggedIn = await this.authService.isLoggedIn();
     this.userInfo = await this.authService.refreshUserInfo();
+    console.log(this.userInfo, "what")
 
     if (!this.isLoggedIn) {
       this.router.navigate(['unauthorized'], {
@@ -43,7 +44,7 @@ export class AuthWithHouseholdGuard implements CanActivate {
       });
       return false;
     }
-    if (this.userInfo.householdID === undefined) {
+    if (this.userInfo.householdID === null) {
       this.router.navigate(['create-household']);
       return false;
     }
