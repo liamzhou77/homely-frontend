@@ -22,8 +22,8 @@ export class AppComponent {
       this.user = this._authService.user;
       this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
-    this._authService.householdChanged.subscribe(() => {
-      this.householdId = this._authService.householdId;
+    this._authService.userInfoChanged.subscribe((userInfo) => {
+      this.householdId = userInfo.householdID;
     });
   }
 
