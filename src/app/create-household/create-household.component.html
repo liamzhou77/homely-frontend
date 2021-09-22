@@ -24,6 +24,7 @@
       type="button"
       color="primary"
       (click)="createHousehold()"
+      [disabled]="!householdName"
     >
       Submit
     </button>

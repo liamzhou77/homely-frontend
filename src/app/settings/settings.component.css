@@ -1,0 +1,14 @@
+#settings-container {
+  width: 700px;
+  margin: 0 auto;
+  padding-top: 64px;
+}
+
+#invite-button {
+  display: block;
+  margin-left: auto;
+}
+
+mat-form-field.mat-form-field {
+  width: 700px;
+}
