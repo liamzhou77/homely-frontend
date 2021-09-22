@@ -5,7 +5,6 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { from, Observable } from 'rxjs';
 import { IUserDto } from '../shared/dtos/user-dto';
 import { AuthService } from './auth-service.component';
 
@@ -32,22 +31,21 @@ export class AuthWithoutHouseholdGuard implements CanActivate {
   async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
-    return from(
-      this.authService.refreshUserInfo().then(() => {
-        if (!this.isLoggedIn) {
-          this.router.navigate(['unauthorized'], {
-            queryParams: { redirect: state.url },
-            replaceUrl: true,
-          });
-          return false;
-        }
-        if (this.authService.householdId !== null) {
-          this.router.navigate(['dashboard']);
-          return false;
-        }
-        return true;
-      })
-    );
+  ): Promise<boolean> {
+    this.isLoggedIn = await this.authService.isLoggedIn();
+    this.userInfo = await this.authService.refreshUserInfo();
+
+    if (!this.isLoggedIn) {
+      this.router.navigate(['unauthorized'], {
+        queryParams: { redirect: state.url },
+        replaceUrl: true,
+      });
+      return false;
+    }
+    if (this.userInfo.householdID !== null) {
+      this.router.navigate(['dashboard']);
+      return false;
+    }
+    return true;
   }
 }
