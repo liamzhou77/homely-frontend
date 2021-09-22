@@ -23,6 +23,8 @@ export class AddEditCalendarEventComponent implements OnInit {
   eventForm: FormGroup;
   selectedColor: string = "#33658A";
   householdMembers: IUserDto[]; //temp
+  householdId: number;
+  userId: number;
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DateSelectArg,
@@ -30,8 +32,10 @@ export class AddEditCalendarEventComponent implements OnInit {
     private calendarClient: CalendarClient,
     private authService: AuthService,
     private householdClient: HouseholdClient) {
-    this.authService.refreshUserInfo().then(() => {
-      this.householdClient.getHouseholdMembers(this.authService.householdId).subscribe(members => {
+    this.authService.userInfoChanged.subscribe(userInfo => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
+      this.householdClient.getHouseholdMembers(userInfo.householdID).subscribe(members => {
         this.householdMembers = members;
       })
     })
@@ -58,8 +62,8 @@ export class AddEditCalendarEventComponent implements OnInit {
   submitEvent(): void {
 
     this.event = {
-      householdId: this.authService.householdId,
-      creatorId: this.authService.userId,
+      householdId: this.householdId,
+      creatorId: this.userId,
       start: this.eventForm.controls.start.value,
       end: this.eventForm.controls.end.value,
       allDay: this.eventForm.controls.allDay.value, 
@@ -69,7 +73,7 @@ export class AddEditCalendarEventComponent implements OnInit {
       assignees: this.eventForm.controls.assignees.value
     }
 
-    this.calendarClient.createEvent(this.authService.householdId, this.authService.userId, this.event.assignees, this.event.title, this.event.description, this.event.color, this.event.allDay, this.event.start, this.event.end).subscribe(response => {
+    this.calendarClient.createEvent(this.householdId, this.userId, this.event.assignees, this.event.title, this.event.description, this.event.color, this.event.allDay, this.event.start, this.event.end).subscribe(response => {
       this.event.eventId = response.id;
       this.dialogRef.close();
     })

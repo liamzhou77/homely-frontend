@@ -22,7 +22,9 @@ export class AppComponent {
       this.user = this._authService.user;
       this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
     });
-    this.householdId = _authService.householdId;
+    this._authService.userInfoChanged.subscribe((userInfo) => {
+      this.householdId = userInfo.householdID;
+    })
   }
 
   ngOnInit(): void {

@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
-import { Subject, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { CoreModule } from './core.module';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { RegistrationModel } from '../shared/models/registrationModel';
 import { UserClient } from '../shared/restClients/user-client';
 import { HouseholdClient } from '../shared/restClients/household-client';
+import { IUserDto } from '../shared/dtos/user-dto';
 
 @Injectable()
 export class AuthService {
   private _user: User;
-  userId: number;
-  householdId: number;
-  householdMembers: number[];
 
   get user(): User {
     return this._user;
@@ -22,8 +20,11 @@ export class AuthService {
 
   private _userManager: UserManager;
   private _loginChangedSubject = new Subject<boolean>();
+  private _userInfoChangedSubject = new Subject<IUserDto>();
 
-  loginChanged = this._loginChangedSubject.asObservable();
+  userInfoChanged = this._userInfoChangedSubject.asObservable().pipe(shareReplay(1));
+
+  loginChanged = this._loginChangedSubject.asObservable().pipe();
 
   constructor(private http: HttpClient, private userClient: UserClient, private householdClient: HouseholdClient) {
     const stsSettings = {
@@ -43,36 +44,31 @@ export class AuthService {
   }
 
 
-  refreshUserInfo(): Promise<void> {
+  async refreshUserInfo(): Promise<IUserDto> {
     if (!this._user) {
-      this.userId = undefined;
-      this.householdId = undefined;
-      this.householdMembers = undefined;
-      return Promise.resolve();
+      this._userInfoChangedSubject.next(null);
+      return null;
     }
 
-    return this.userClient
-      .getUserInfo(this._user.profile.preferred_username)
-      .toPromise()
-      .then((userInfo) => {
-        this.userId = userInfo.userID;
-        this.householdId = userInfo.householdID;
-      });
+    let userInfo = await this.userClient
+      .getUserInfo(this._user.profile.preferred_username).toPromise();
+
+    await this._userInfoChangedSubject.next(userInfo);
+    return userInfo;
   }
 
   login() {
     return this._userManager.signinRedirect();
   }
 
-  isLoggedIn(): Promise<boolean> {
-    return this._userManager.getUser().then((user) => {
-      const userCurrent = !!user && !user.expired;
-      if (this._user !== user) {
-        this._loginChangedSubject.next(userCurrent);
-      }
-      this._user = user;
-      return userCurrent;
-    });
+ async isLoggedIn(): Promise<boolean> {
+   let user = await this._userManager.getUser();
+   const userCurrent = !!user && !user.expired;
+   if (this._user !== user) {
+     this._loginChangedSubject.next(userCurrent);
+   }
+   this._user = user;
+   return userCurrent;
   }
 
   completeLogin() {

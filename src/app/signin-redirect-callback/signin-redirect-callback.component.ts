@@ -10,9 +10,8 @@ import { AuthService } from "../core/auth-service.component";
 export class SigninRedirectCallbackComponent implements OnInit {
   constructor(private _authService: AuthService, private _router: Router) {}
 
-  ngOnInit() {
-    this._authService.completeLogin().then((user) => {
-      this._router.navigate(["/"], { replaceUrl: true });
-    });
+  async ngOnInit() {
+    await this._authService.completeLogin();
+    this._router.navigate(["/"], { replaceUrl: true });
   }
 }

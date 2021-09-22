@@ -21,6 +21,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   retrievedEvents: EventInput[] = [];
   currentEvents: EventApi[] = []; //call to api to get events
+  householdId: number;
+  userId: number;
 
 
   calendarVisible = true;
@@ -53,30 +55,33 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private modalService: MatDialog, private calendarClient: CalendarClient, private authService: AuthService) { }
+  constructor(private modalService: MatDialog, private calendarClient: CalendarClient, private authService: AuthService) {
+    this.authService.userInfoChanged.subscribe(userInfo => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
+    })
+  }
+
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
-    this.authService.refreshUserInfo().then(() => {
 
-      this.calendarClient.getEvents(this.authService.userId, this.authService.householdId).subscribe(events => {
-        events.forEach(event => {
-          this.calendarComponent.getApi().addEvent({
-            id: event.eventId.toString(),
-            householdId: event.householdId,
-            creatorId: event.creatorId,
-            title: event.title,
-            start: event.start,
-            end: event.end,
-            description: event.description,
-            color: event.color,
-            allDay: event.allDay,
-            assignees: event.assignees
-          })
+    this.calendarClient.getEvents(this.userId, this.householdId).subscribe(events => {
+      events.forEach(event => {
+        this.calendarComponent.getApi().addEvent({
+          id: event.eventId.toString(),
+          householdId: event.householdId,
+          creatorId: event.creatorId,
+          title: event.title,
+          start: event.start,
+          end: event.end,
+          description: event.description,
+          color: event.color,
+          allDay: event.allDay,
+          assignees: event.assignees
         })
-
       })
 
     })

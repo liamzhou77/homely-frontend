@@ -24,11 +24,14 @@ export class EditCalendarEventComponent implements OnInit {
   eventForm: FormGroup;
   selectedColor: string = "#33658A";
   householdMembers: IUserDto[]; //temp;
-
+  householdId: number;
+  userId: number;
   constructor(@Inject(MAT_DIALOG_DATA) public data: ICalendarEventDto, private dialogRef: MatDialogRef<EditCalendarEventComponent>, private calendarClient: CalendarClient,
     private authService: AuthService, private householdClient: HouseholdClient) {
-    this.authService.refreshUserInfo().then(() => {
-      this.householdClient.getHouseholdMembers(this.authService.householdId).subscribe(members => {
+    this.authService.userInfoChanged.subscribe(userInfo => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
+      this.householdClient.getHouseholdMembers(userInfo.householdID).subscribe(members => {
         this.householdMembers = members;
       })
     })
