@@ -1,0 +1,31 @@
+<button mat-icon-button [mat-menu-trigger-for]="list">
+  <mat-icon
+    class="nav-icon material-icons-outlined"
+    [matBadge]="notifications.length"
+    [matBadgeHidden]="notifications.length === 0"
+    >notifications</mat-icon
+  >
+</button>
+<mat-menu #list="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let notification of notifications"
+    [mat-menu-trigger-for]="invitation"
+    [matMenuTriggerData]="{ notificationId: notification.notificationID }"
+  >
+    <span class="bold">{{ notification.inviter }}</span
+    ><span> invited you to join his household </span
+    ><span class="bold">{{ notification.household }}</span>
+  </button>
+</mat-menu>
+
+<mat-menu #invitation="matMenu">
+  <ng-template matMenuContent let-notificationId="notificationId">
+    <button mat-menu-item (click)="accept_invitation(notificationId)">
+      Accept
+    </button>
+    <button mat-menu-item (click)="refuse_invitation(notificationId)">
+      Refuse
+    </button>
+  </ng-template>
+</mat-menu>

@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+
+::ng-deep.mat-menu-panel {
+  max-width: 500px !important;
+}
+
+.bold {
+  font-weight: 700;
+}

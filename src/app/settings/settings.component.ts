@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationService } from './notification.service';
+import { AuthService } from '../core/auth-service.component';
+import { SettingService } from './setting.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,18 +10,24 @@ import { NotificationService } from './notification.service';
 })
 export class SettingsComponent implements OnInit {
   public invite_username: string;
+  private userId: number;
 
   constructor(
     private snackBar: MatSnackBar,
-    private notificationService: NotificationService
-  ) {}
+    private settingService: SettingService,
+    private authService: AuthService
+  ) {
+    this.authService.userInfoChanged.subscribe((userInfo) => {
+      this.userId = userInfo.userID;
+    });
+  }
 
   ngOnInit(): void {}
 
   public invite() {
     if (this.invite_username) {
-      this.notificationService
-        .send_invitation(this.invite_username)
+      this.settingService
+        .send_invitation(this.invite_username, this.userId)
         .subscribe(() => {
           this.snackBar.open('Invitation sent', undefined, {
             duration: 3000,

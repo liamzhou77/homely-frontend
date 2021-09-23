@@ -32,9 +32,9 @@ export class AppComponent {
       this.isLoggedIn = loggedIn;
       this.user = this._authService.user;
       this.sidenavContentLeftMargin = this.isLoggedIn ? '241px' : '0px';
-      this._authService
-        .refreshUserInfo()
-        .then(() => (this.householdId = this._authService.householdId));
+      this._authService.userInfoChanged.subscribe((userInfo) => {
+        this.householdId = userInfo.householdID;
+      });
     });
   }
 

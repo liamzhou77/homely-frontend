@@ -6,15 +6,15 @@ import { AuthService } from '../core/auth-service.component';
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationService {
+export class SettingService {
   private baseUrl = environment.apiRoot;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  public send_invitation(username: string) {
+  public send_invitation(username: string, userId: number) {
     return this.http.post(`${this.baseUrl}notification`, {
       type: 'invitation',
-      creatorID: this.authService.userId,
+      creatorID: userId,
       assigneeUsername: username,
     });
   }

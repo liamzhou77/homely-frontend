@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../core/auth-service.component';
 
 @Component({
@@ -13,7 +14,11 @@ export class CreateHouseholdComponent implements OnInit {
   private baseUrl = environment.apiRoot;
   public username: string;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.username = this.authService.user.profile.preferred_username;
   }
 
@@ -26,9 +31,7 @@ export class CreateHouseholdComponent implements OnInit {
           `${this.baseUrl}household/${this.householdName}/${this.username}`,
           {}
         )
-        .subscribe(
-          (household) => (this.authService.householdId = household.id)
-        );
+        .subscribe(() => this.router.navigate(['dashboard']));
     }
   }
 }
