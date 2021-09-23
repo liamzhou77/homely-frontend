@@ -22,10 +22,10 @@ export class EditCalendarEventComponent implements OnInit {
   event: ICalendarEventDto;
   myDatePicker: NgxMatDatetimePicker<Date>;
   eventForm: FormGroup;
-  selectedColor: string = "#33658A";
   householdMembers: IUserDto[]; //temp;
   householdId: number;
   userId: number;
+  selectedColor: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data: ICalendarEventDto, private dialogRef: MatDialogRef<EditCalendarEventComponent>, private calendarClient: CalendarClient,
     private authService: AuthService, private householdClient: HouseholdClient) {
     this.authService.userInfoChanged.subscribe(userInfo => {
@@ -59,8 +59,6 @@ export class EditCalendarEventComponent implements OnInit {
     this.eventForm.valueChanges.subscribe(() => {
       this.selectedColor = this.eventForm.controls.color.value;
     })
-
-
   }
 
   submitEvent(): void {
@@ -68,7 +66,7 @@ export class EditCalendarEventComponent implements OnInit {
     this.calendarClient.updateEvent(this.event.eventId,
       this.event.householdId,
       this.event.creatorId,
-      this.event.assignees,
+      this.eventForm.controls.assignees.value,
       this.eventForm.controls.title.value,
       this.eventForm.controls.description.value,
       this.selectedColor,
@@ -81,6 +79,7 @@ export class EditCalendarEventComponent implements OnInit {
         this.event.title = this.eventForm.controls.title.value;
         this.event.description = this.eventForm.controls.description.value;
         this.event.color = this.selectedColor;
+        this.event.assignees = this.eventForm.controls.assignees.value;
         this.dialogRef.close();
 
       })

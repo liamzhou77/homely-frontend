@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth-service.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-unauthorized',
@@ -23,6 +24,9 @@ export class UnauthorizedComponent implements OnInit {
   }
   login() {
     this._authService.login();
+  }
+  signUp() {
+    window.open(environment.stsAuthority + "Account/Register", "_blank");
   }
 
 }

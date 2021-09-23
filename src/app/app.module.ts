@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -45,6 +47,9 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MatBadgeModule,
     MatIconModule,
     MatMenuModule,
+    MatOptionModule,
+    MatCardModule
+
   ],
   providers: [
     AuthService,

@@ -1,6 +1,23 @@
 <img src="{{houseTopImageSrc}}" id="house-top">
 <img src="{{houseLeftImageSrc}}" id="house-left">
 <img src="{{houseRightImageSrc}}" id="house-right">
-<div id="about-big">
-  <p id="about-big-text" class="primary-color-dark">Hestia makes managing your household easy!</p> 
-</div>
+<mat-card id="about-big">
+  <mat-card-header class="header">
+    <div class="header">
+
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="button-container">
+      <div class="top-bar-item-button" (click)="signUp()">
+
+        <span class="top-bar-text">Sign up</span>
+
+      </div>
+      <mat-card class="top-bar-item-button">
+        <span class="top-bar-text">About</span>
+      </mat-card>
+    </div>
+  </mat-card-content>
+  
+</mat-card>

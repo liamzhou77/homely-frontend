@@ -29,25 +29,56 @@ top: 20vh;
 #about-big {
     background-color: #ffffff;
     position: absolute;
-    width: 40vw;
-    height:70vh;
+    width: 44vw;
+    height:40vh;
     left:12vw;
-    top: 17vh;
-    border-radius: 50px;
+    top: 25%;
+    border-radius: 15px;
     border: 1px solid;
     border-color: #9dc88d;
-    align-content: center;
-    transform: rotate(-2deg);
- 
+
+    text-justify:distribute;
 }
 
-#about-big-text {
-  color: #9dc88d;
-  font-size: 66px;
-  font-weight: 700;
-  line-height: 2em;
-  padding: 20px;
-  word-spacing: 15px;
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    top:50%;
+}
+
+.header {
+    height: 25%;
+}
 
 
+.top-bar-item-button:hover {
+  background: #9dc88d;
+  opacity: 0.9;
+}
+
+.top-bar-item-button.active {
+  background: #9dc88d;
+  opacity: 1;
+  cursor: default;
+}
+
+.top-bar-item-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #9dc88d;
+  opacity: 0.7;
+  width: 18vw;
+  height:16vh;
+  padding: 11px;
+  padding-left: 31px;
+  padding-right: 31px;
+  border-radius: 23.5px 23.5px 23.5px 23.5px;
+  cursor: pointer;
+  outline: 0;
+}
+
+.top-bar-text {
+  font-size: 48px;
 }
