@@ -1,6 +1,6 @@
 import { NgxMatDatetimePicker } from '@angular-material-components/datetime-picker';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CalendarApi, DateSelectArg, EventApi, EventSourceApi } from '@fullcalendar/angular';
@@ -44,13 +44,13 @@ export class AddEditCalendarEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventForm = new FormGroup({
-      title: new FormControl(),
-      start: new FormControl(),
-      end: new FormControl(),
-      description: new FormControl(),
+      title: new FormControl(null, Validators.required),
+      start: new FormControl(null, Validators.required),
+      end: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
       allDay: new FormControl(false),
-      color: new FormControl(this.selectedColor),
-      assignees: new FormControl([])
+      color: new FormControl(this.selectedColor, Validators.required),
+      assignees: new FormControl([this.userId], Validators.required)
     });
     this.eventForm.controls.start.setValue(format(this.data.start, "yyyy-MM-dd'T'HH:mm"));
     this.eventForm.controls.end.setValue(format(this.data.end, "yyyy-MM-dd'T'HH:mm"));
