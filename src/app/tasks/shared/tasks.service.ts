@@ -1,33 +1,36 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 import { Task } from './task';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private base_url = 'http://localhost:4200/api';
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+  private baseUrl = environment.apiRoot + 'tasks';
 
   constructor(private http: HttpClient) {}
 
-  getTasks(completed: boolean): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.base_url}/todos?UserID=5`).pipe(
+  public getTasks(householdId: number, completed: boolean): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.baseUrl}/${householdId}`).pipe(
       map((tasks) => tasks.filter((task) => task.completed == completed)),
       catchError(this.handleError<Task[]>([]))
     );
   }
 
-  // addTask(task: any): Observable<Task> {
-  //   return this.http.post<any>(`${this.base_url}/todo`)
-  // }
+  public addTask(householdId: number, description: string): Observable<any> {
+    return this.http.post<any>(this.baseUrl, { householdId, description });
+  }
+
+  public updateTaskCompleted(taskId: number) {
+    return this.http.put(`${this.baseUrl}/${taskId}/update/completed`, {});
+  }
+
+  public deleteTask(taskId: number) {
+    return this.http.delete(`${this.baseUrl}/${taskId}`);
+  }
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {

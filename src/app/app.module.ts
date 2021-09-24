@@ -48,8 +48,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MatIconModule,
     MatMenuModule,
     MatOptionModule,
-    MatCardModule
-
+    MatCardModule,
   ],
   providers: [
     AuthService,

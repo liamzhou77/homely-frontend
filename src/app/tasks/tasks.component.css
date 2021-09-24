@@ -1,6 +1,7 @@
 .tasks-header {
   font-weight: 600;
   margin: 1rem 0;
+  margin-left: 1rem;
 }
 
 .tasks-card {
@@ -8,11 +9,17 @@
   padding: 13px 14px;
   background-color: #fff;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .tasks-info {
   display: flex;
   flex-direction: column;
+}
+
+.task-delete-btn {
+  cursor: pointer;
 }
 
 mat-checkbox ::ng-deep .mat-checkbox-inner-container {

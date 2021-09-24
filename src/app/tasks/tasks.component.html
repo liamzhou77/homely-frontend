@@ -11,7 +11,7 @@
       placeholder="Buy Grocery"
       autofocus
       [(ngModel)]="inputValue"
-      (keydown.enter)="addTask($event)"
+      (keydown.enter)="addTask()"
     />
   </div>
   <div class="tasks-header">Tasks - {{ incompletedTasks?.length }}</div>
@@ -20,8 +20,11 @@
   </div>
   <div class="tasks-card" *ngFor="let task of incompletedTasks">
     <mat-checkbox (change)="setCompleted(task)">
-      {{ task.todoDescription }}
+      {{ task.description }}
     </mat-checkbox>
+    <mat-icon class="task-delete-btn" (click)="deleteTask(task)"
+      >close</mat-icon
+    >
   </div>
   <div class="tasks-header">Completed - {{ completedTasks?.length }}</div>
   <div class="tasks-card" *ngFor="let task of completedTasks">
@@ -29,7 +32,10 @@
       style="text-decoration: line-through"
       (change)="setCompleted(task)"
       [checked]="true"
-      >{{ task.todoDescription }}</mat-checkbox
+      >{{ task.description }}</mat-checkbox
+    >
+    <mat-icon class="task-delete-btn" (click)="deleteTask(task)"
+      >close</mat-icon
     >
   </div>
 </div>
