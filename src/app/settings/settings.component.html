@@ -1,4 +1,16 @@
 <div id="settings-container">
+  <mat-list>
+    <div mat-subheader>Household Members</div>
+    <mat-list-item *ngFor="let member of householdMembers">
+      <mat-icon mat-list-icon class="material-icons-outlined"
+        >account_circle</mat-icon
+      >
+      <div mat-line style="font-weight: 700">{{ member.username }}</div>
+      <div mat-line>Admin</div>
+    </mat-list-item>
+    <div mat-subheader>Invitation</div>
+  </mat-list>
+
   <mat-form-field appearance="fill">
     <mat-label>Invite a family member to the household</mat-label>
     <input

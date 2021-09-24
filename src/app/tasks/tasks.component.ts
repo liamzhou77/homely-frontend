@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthService } from '../core/auth-service.component';
 import { Task } from './shared/task';
 import { TaskService } from './shared/tasks.service';
 
@@ -9,40 +9,76 @@ import { TaskService } from './shared/tasks.service';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  completedTasks: Task[];
-  incompletedTasks: Task[];
-  inputValue = '';
+  public completedTasks: Task[];
+  public incompletedTasks: Task[];
+  public inputValue = '';
+  private householdId: number;
 
-  constructor(private tasksService: TaskService) {}
+  constructor(
+    private tasksService: TaskService,
+    private authService: AuthService
+  ) {
+    this.authService.userInfoChanged.subscribe(
+      (userInfo) => (this.householdId = userInfo.householdID)
+    );
+  }
 
   ngOnInit(): void {
     this.getTasks();
   }
 
-  getTasks(): void {
+  public getTasks(): void {
     this.tasksService
-      .getTasks(true)
+      .getTasks(this.householdId, true)
       .subscribe((tasks) => (this.completedTasks = tasks));
     this.tasksService
-      .getTasks(false)
+      .getTasks(this.householdId, false)
       .subscribe((tasks) => (this.incompletedTasks = tasks));
   }
 
-  addTask(event: any): void {
-    this.inputValue = '';
-    this.incompletedTasks.unshift({
-      todoDescription: event.target.value,
-    } as Task);
+  public addTask(): void {
+    if (this.inputValue !== '') {
+      const description = this.inputValue;
+      this.tasksService
+        .addTask(this.householdId, description)
+        .subscribe((task) =>
+          this.incompletedTasks.unshift({
+            taskId: task.id,
+            description: description,
+            completed: false,
+          })
+        );
+      this.inputValue = '';
+    }
   }
 
-  setCompleted(task: Task) {
+  public setCompleted(task: Task) {
+    this.tasksService.updateTaskCompleted(task.taskId).subscribe(() => {
+      this.removeTaskFromList(task);
+      task.completed = !task.completed;
+      this.addTaskToList(task);
+    });
+  }
+
+  public deleteTask(task: Task) {
+    this.tasksService.deleteTask(task.taskId).subscribe(() => {
+      this.removeTaskFromList(task);
+    });
+  }
+
+  private removeTaskFromList(task: Task) {
     if (task.completed) {
       this.completedTasks = this.completedTasks.filter((t) => t !== task);
-      this.incompletedTasks.push(task);
     } else {
       this.incompletedTasks = this.incompletedTasks.filter((t) => t !== task);
-      this.completedTasks.push(task);
     }
-    task.completed = !task.completed;
+  }
+
+  private addTaskToList(task: Task) {
+    if (task.completed) {
+      this.completedTasks.unshift(task);
+    } else {
+      this.incompletedTasks.unshift(task);
+    }
   }
 }
