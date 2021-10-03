@@ -1,0 +1,99 @@
+#chart {
+  padding: 0;
+  display: flex;
+}
+
+apx-chart {
+    display:block;
+    margin: auto;
+    width:100%;
+}
+
+.row {
+  display: flex;
+  justify-content:space-evenly;
+  flex-wrap:nowrap;
+  vertical-align: middle;
+}
+
+.col {
+  display: block;
+  width: auto;
+}
+
+/*form {
+    display:block;
+}*/
+
+.mat-form-field {
+    width: 100%;
+}
+
+.tasks-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 11px;
+  height: 40px;
+  background: rgba(157, 200, 141, 0.6);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  width: 80%;
+  margin: 1rem auto 1rem auto;
+}
+
+.tasks-input {
+  border: none;
+  background: transparent;
+  outline: 0;
+  width: 100%;
+  margin-left: 8px;
+}
+
+.displayed-expenses-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 11px;
+  height: 20px;
+  background: rgba(157, 200, 141, 0.6);
+  border-radius: 20px;
+  margin-bottom: .5rem;
+  width: 75%;
+  margin: 1rem auto 1rem auto;
+}
+
+.displayed-expenses-input {
+  border: none;
+  background: transparent;
+  outline: 0;
+  margin-left: 8px;
+}
+
+.add-category-icon:hover {
+    cursor:pointer;
+    
+}
+
+.add-category-form {
+    display:flex;
+    justify-content: space-between
+
+}
+
+.category-input-field-name {
+    margin: 5px;
+    width: 50%;
+}
+
+.category-input-field-limit {
+  margin: 5px;
+  width: 10%;
+}
+
+.expense-category-input {
+    width: 25%;
+    margin: auto;
+    margin-bottom:0px;
+}

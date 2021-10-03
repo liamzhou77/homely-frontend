@@ -1,1 +1,14 @@
-<p>budget works!</p>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let budget of budgets" (click)="setBudgetView(budget.budgetId)">
+        {{budget.budgetName}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <app-edit-budget [budgetId]="currentBudgetId" style="height: 100%; width: 100%;"></app-edit-budget>
+  </div>
+
+</mat-drawer-container>

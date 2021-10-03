@@ -1,0 +1,35 @@
+.example-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+mat-list-option {
+/*  border-radius: 23.5px 23.5px 23.5px 23.5px;
+*/  text-align: center;
+}
+
+/*.mat-list-option:hover {
+  background: #f2f3f5;
+}*/
+
+.mat-list-option:hover {
+  background: rgba(157, 200, 141, 0.6);
+  cursor: default;
+  cursor:pointer;
+}
+
+
+
