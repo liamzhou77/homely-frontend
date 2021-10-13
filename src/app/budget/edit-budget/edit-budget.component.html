@@ -23,21 +23,21 @@
         <input matInput class="category-input-field-name" type="text" placeholder="Expense Name" />
         <mat-form-field class="expense-category-input" >
           <mat-select placeholder="Category">
-            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category.budgetCategoryId">{{category}}</mat-option>
           </mat-select>
         </mat-form-field>
         <input matInput class="category-input-field-limit" type="number" placeholder="$$$"/>
       </form>
     </div>
-    <div class="displayed-expenses-container" *ngFor="let expense of displayedExpenses">
+    <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
       <span id="add-category-icon" class="iconify icon"
             data-inline="false"
             data-icon="ic:outline-minus"></span>
 
       <form class="font-lg add-category-form displayed-expenses-input">
         <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
-        <input matInput class="expense-category-input" type="text" [value]="expense.expenseCategory" disabled />
-        <input matInput class="category-input-field-limit" type="number" [value]="expense.expenseAmount" disabled />
+        <input matInput class="expense-category-input" type="text" [value]="displayedCategory.budgetCategoryName" disabled />
+        <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
 
       </form>
     </div>
@@ -73,21 +73,21 @@
             <mat-label></mat-label>
 
             <mat-select formControlName="categoryName" placeholder="Category">
-              <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+              <mat-option *ngFor="let category of categories" [value]="category.budgetCategoryId">{{category.budgetCategoryName}}</mat-option>
             </mat-select>
           </mat-form-field>
         <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="amount" (keydown.enter)="addExpense()" />
       </form>
     </div>
-    <div class="displayed-expenses-container" *ngFor="let expense of displayedExpenses">
+    <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
       <span id="add-category-icon" class="iconify icon"
             data-inline="false"
             data-icon="ic:outline-minus"></span>
 
       <form class="font-lg add-category-form displayed-expenses-input">
         <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
-        <input matInput class="category-input-field-name" type="text" [value]="expense.expenseCategory" disabled />
-        <input matInput class="category-input-field-limit" type="number" [value]="expense.expenseAmount" disabled />
+        <input matInput class="category-input-field-name" type="text" [value]="displayedCategory.budgetCategoryName" disabled />
+        <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
 
       </form>
     </div>

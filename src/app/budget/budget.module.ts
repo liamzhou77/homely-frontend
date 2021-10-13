@@ -18,9 +18,10 @@ import { MatListModule } from '@angular/material/list';
 import { EditBudgetComponent } from './edit-budget/edit-budget.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatIconModule } from '@angular/material/icon';
+import { CreateBudgetComponent } from './create-budget/create-budget.component';
 
 @NgModule({
-  declarations: [BudgetComponent, EditBudgetComponent],
+  declarations: [BudgetComponent, EditBudgetComponent, CreateBudgetComponent],
   imports: [CommonModule,
     BudgetRoutingModule,
     FormsModule,

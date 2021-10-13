@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../core/auth-service.component';
+import { IBudget } from '../shared/dtos/budget-dtos';
+import { BudgetClient } from '../shared/restClients/budget-client';
+import { CreateBudgetComponent } from './create-budget/create-budget.component';
 
 @Component({
   selector: 'app-budget',
@@ -8,30 +13,48 @@ import { Component, OnInit } from '@angular/core';
 export class BudgetComponent implements OnInit {
 
   budgets: IBudget[] = [];
+  householdId: number;
+  userId: number;
 
-  constructor() {
-    this.budgets.push(
-      { budgetId: 1, budgetName: "August 2021" },
-      { budgetId: 2, budgetName: "September 2021" },
-      { budgetId: 3, budgetName: "October 2021" },
-      { budgetId: 4, budgetName: "November 2021" },
+  constructor(private authService: AuthService,
+    private budgetClient: BudgetClient,
+    private modalService: MatDialog) {
+    this.authService.userInfoChanged.subscribe(userInfo => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
 
-    );
+      budgetClient.getBudgets(this.userId).subscribe(budgets => {
+        this.budgets = budgets;
+      })
 
+
+    })
+    
   }
 
   showFiller: boolean = true;
-  currentBudgetId: number = 1;
+  currentBudget: IBudget;
 
   ngOnInit(): void { }
 
 
-  setBudgetView(budgetId: number) {
-    this.currentBudgetId = budgetId;
-  }
-}
+  createBudgetModal() {
+    const modalRef = this.modalService.open(CreateBudgetComponent);
+    modalRef.afterClosed().subscribe(() => {
+      let newBudget = modalRef.componentInstance.newBudget;
+      newBudget.ownerId = this.userId;
+      this.budgetClient.createBudget(newBudget).subscribe(() => {
+        this.budgetClient.getBudgets(this.userId).subscribe(budgets => {
+          this.budgets = budgets;
 
-export interface IBudget {
-  budgetId: number,
-  budgetName: string
+        })
+      });
+    })
+
+  }
+
+
+  setBudgetView(budget: IBudget) {
+    this.currentBudget = budget;
+  }
 }

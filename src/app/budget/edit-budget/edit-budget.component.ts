@@ -8,6 +8,9 @@ import {
   ApexChart,
   ChartComponent
 } from "ng-apexcharts";
+import { AuthService } from '../../core/auth-service.component';
+import { IBudget, IBudgetCategory, IExpense } from '../../shared/dtos/budget-dtos';
+import { BudgetClient } from '../../shared/restClients/budget-client';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -24,18 +27,40 @@ export type ChartOptions = {
 export class EditBudgetComponent implements OnInit {
 
   @Input()
-  set budgetId(budgetId: number) {
-    
+  set budget(budget: IBudget) {
+    this.categories = budget.budgetCategories;
+    this.currentBudget = budget;
+    if (this.categories.length > 0)
+      this.displayedCategory = this.categories[0];
+
+    this.categories.forEach(category => {
+      this.chartOptions.labels.push(category.budgetCategoryName);
+
+      let total = 0;
+
+      if (!category.expenses)
+        category.expenses = [];
+      category.expenses.forEach(expense => {
+        total += expense.amount;
+      })
+
+      let newCategoryTotalPercentage = (total / category.percentageGoal) * 100;
+      this.categoryTotals.push(total);
+      this.chartOptions.series.push(newCategoryTotalPercentage);
+      this.chartOptions.series = Object.assign([], this.chartOptions.series);
+      this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
+    })    
   }
 
-  
-
-  categories: string[] = [];
   categoryTotals: number[] = [];
-  categoryLimits: number[] = [];
-  expensesByCategory: IExpense[][] = [];
 
-  displayedExpenses: IExpense[] = [];
+  currentBudget: IBudget;
+  householdId: number;
+  userId: number;
+
+  categories: IBudgetCategory[] = [];
+
+  displayedCategory: IBudgetCategory;
 
   addExpenseForm: FormGroup;
   addExpenseCategoryForm: FormGroup;
@@ -57,7 +82,12 @@ export class EditBudgetComponent implements OnInit {
   @ViewChild("chart", { static: false }) chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor(private modalService: MatDialog) {
+  constructor(private modalService: MatDialog, private budgetClient: BudgetClient, private authService: AuthService) {
+
+    this.authService.userInfoChanged.subscribe(userInfo => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
+    })
     
     this.chartOptions = {
       series: [],
@@ -82,9 +112,11 @@ export class EditBudgetComponent implements OnInit {
               label: "Total Spent",
               formatter: (w) => {
                 let total = 0;
-                this.expensesByCategory.forEach(category => {
-                  category.forEach(expense => {
-                    total += expense.expenseAmount;
+                this.categories.forEach(category => {
+                  if (!category.expenses)
+                    category.expenses = [];
+                  category.expenses.forEach(expense => {
+                    total += expense.amount;
                   })
                 })
                 return total.toString() + "$";
@@ -99,79 +131,79 @@ export class EditBudgetComponent implements OnInit {
 
   addExpenseCategory() {
     //post the expense category for the budget to the api
+
     if (this.addExpenseCategoryForm.controls.categoryName.value == null || this.addExpenseCategoryForm.controls.categoryLimit.value == null)
       return;
 
-    this.chartOptions.labels.push(this.addExpenseCategoryForm.controls.categoryName.value);
-    this.categoryTotals.push(0);
-    this.categoryLimits.push(this.addExpenseCategoryForm.controls.categoryLimit.value);
-    this.chartOptions.series.push(0);
-    this.categories.push(this.addExpenseCategoryForm.controls.categoryName.value)
-    this.expensesByCategory.push([]);
-    this.chartOptions.series = Object.assign([], this.chartOptions.series);
-    this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
+    let newBudgetCategory: IBudgetCategory = {
+      budgetId: this.currentBudget.budgetId,
+      budgetCategoryName: this.addExpenseCategoryForm.controls.categoryName.value,
+      color: "whatever",
+      percentageGoal: this.addExpenseCategoryForm.controls.categoryLimit.value
+    }
 
-    this.addExpenseCategoryForm.controls.categoryName.setValue('');
-    this.addExpenseCategoryForm.controls.categoryLimit.setValue(null);
+    this.budgetClient.createBudgetCategory(newBudgetCategory).subscribe(id => {
+      newBudgetCategory.budgetCategoryId = id;
+      newBudgetCategory.expenses = [];
+      this.categories.push(newBudgetCategory);
+
+
+      this.chartOptions.labels.push(this.addExpenseCategoryForm.controls.categoryName.value);
+      this.chartOptions.series.push(0);
+      this.categories.push(this.addExpenseCategoryForm.controls.categoryName.value)
+      this.chartOptions.series = Object.assign([], this.chartOptions.series);
+      this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
+
+      this.addExpenseCategoryForm.controls.categoryName.setValue('');
+      this.addExpenseCategoryForm.controls.categoryLimit.setValue(null);
+    })
     
   }
 
   addExpense() {
-    if (this.addExpenseForm.controls.categoryName == null || this.addExpenseForm.controls.amount == null || this.addExpenseForm.controls.expenseName == null)
+    if (this.addExpenseForm.controls.categoryName.value == null || this.addExpenseForm.controls.amount.value == null || this.addExpenseForm.controls.expenseName.value == null)
       return;
 
-    let categoryIndex = this.chartOptions.labels.findIndex(x => x == this.addExpenseForm.controls.categoryName.value);
+    let newExpense: IExpense = {
+      expenseName: this.addExpenseForm.controls.expenseName.value,
+      createdBy: this.userId,
+      amount: this.addExpenseForm.controls.amount.value,
+      budgetCategoryId: this.addExpenseForm.controls.categoryName.value,
+
+    }
+
+    this.budgetClient.createExpense(newExpense).subscribe(id => {
+      newExpense.expenseId = id;
+
+      let categoryIndex = this.chartOptions.labels.findIndex(x => x == this.categories.find(x => x.budgetCategoryId == this.addExpenseForm.controls.categoryName.value).budgetCategoryName);
+
+      this.categories[categoryIndex].expenses.push(newExpense)
+
+      let categoryTotal = this.categoryTotals[categoryIndex];
+
+      let categoryLimit = this.categories[categoryIndex].percentageGoal;
+
+      this.categoryTotals[categoryIndex] = categoryTotal + this.addExpenseForm.controls.amount.value;
+
+      let newCategoryTotalPercentage = (this.categoryTotals[categoryIndex] / categoryLimit) * 100;
+
+      this.chartOptions.series[categoryIndex] = newCategoryTotalPercentage;
 
 
-    this.expensesByCategory[categoryIndex].push({
-      expenseId: 1000, expenseAmount: this.addExpenseForm.controls.amount.value,
-      expenseCategory: this.addExpenseForm.controls.categoryName.value,
-      expenseName: this.addExpenseForm.controls.expenseName.value
+      this.chartOptions.series = Object.assign([], this.chartOptions.series);
+      this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
+
+      this.addExpenseForm.controls.categoryName.setValue('')
+      this.addExpenseForm.controls.expenseName.setValue('')
+      this.addExpenseForm.controls.amount.setValue('');
+
     })
-
-    let categoryTotal = this.categoryTotals[categoryIndex];
-    let categoryLimit = this.categoryLimits[categoryIndex];
-
-    this.categoryTotals[categoryIndex] = categoryTotal + this.addExpenseForm.controls.amount.value;
-    let newCategoryTotalPercentage = (this.categoryTotals[categoryIndex] / categoryLimit) * 100;
-
-    console.log(categoryIndex, categoryTotal, categoryLimit)
-    console.log(newCategoryTotalPercentage);
-    this.chartOptions.series[categoryIndex] = newCategoryTotalPercentage;
-
-
-    this.chartOptions.series = Object.assign([], this.chartOptions.series);
-    this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
-
-    this.addExpenseForm.controls.categoryName.setValue('')
-    this.addExpenseForm.controls.expenseName.setValue('')
-    this.addExpenseForm.controls.amount.setValue('');
   }
 
 
   selectedCategory(e: any, chart: any, options: any) {
-    this.displayedExpenses = this.expensesByCategory[options.dataPointIndex];
+    this.displayedCategory = this.categories[options.dataPointIndex];
   }
 
-  //openAddCategoryForm() {
-  //  const modalRef = this.modalService.open(AddBudgetExpenseCategoryComponent);
-
-  //  modalRef.afterClosed().subscribe(() => {
-  //    let categoryLimit = modalRef.componentInstance.categoryLimit;
-  //    let categoryName = modalRef.componentInstance.categoryName;
-
-  //    if (categoryName && categoryLimit) {
-  //      //this.addExpenseCategory(categoryName, categoryLimit);
-
-  //    }
-  //  });
-  //}
 }
 
-
-export interface IExpense {
-  expenseId: number,
-  expenseCategory: string,
-  expenseName: string,
-  expenseAmount: number,
-}
