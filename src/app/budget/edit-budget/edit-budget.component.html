@@ -5,42 +5,17 @@
             data-inline="false"
             data-icon="ic:outline-add"></span>
       <form class="font-lg add-category-form tasks-input"
-            autofocus>
-        <input matInput class="category-input-field-name" type="text" placeholder="Category Name" />
-        <input matInput class="category-input-field-limit" type="number" placeholder="$$$"/>
+            autofocus
+            [formGroup]="addIncomeForm">
+        <input matInput class="category-input-field-name" type="text" placeholder="Income Name" formControlName="incomeName" />
+        <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="incomeAmount" (keydown.enter)="addIncome()" />
       </form>
     </div>
-    <apx-chart [series]="chartOptions.series"
-               [chart]="chartOptions.chart"
-               [plotOptions]="chartOptions.plotOptions"
-               [labels]="chartOptions.labels"></apx-chart>
-    <div class="tasks-input-container">
-      <span id="add-category-icon" class="iconify icon"
-            data-inline="false"
-            data-icon="ic:outline-add"></span>
-      <form class="font-lg add-category-form tasks-input"
-            autofocus>
-        <input matInput class="category-input-field-name" type="text" placeholder="Expense Name" />
-        <mat-form-field class="expense-category-input" >
-          <mat-select placeholder="Category">
-            <mat-option *ngFor="let category of categories" [value]="category.budgetCategoryId">{{category}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <input matInput class="category-input-field-limit" type="number" placeholder="$$$"/>
-      </form>
-    </div>
-    <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
-      <span id="add-category-icon" class="iconify icon"
-            data-inline="false"
-            data-icon="ic:outline-minus"></span>
-
-      <form class="font-lg add-category-form displayed-expenses-input">
-        <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
-        <input matInput class="expense-category-input" type="text" [value]="displayedCategory.budgetCategoryName" disabled />
-        <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
-
-      </form>
-    </div>
+    <apx-chart [series]="incomeChartOptions.series"
+               [chart]="incomeChartOptions.chart"
+               [plotOptions]="incomeChartOptions.plotOptions"
+               [labels]="incomeChartOptions.labels"
+               [legend]="incomeChartOptions.legend"></apx-chart>
 
   </div>
   <div class="col">
@@ -48,8 +23,7 @@
       <span id="add-category-icon" class="iconify icon"
             data-inline="false"
             data-icon="ic:outline-add"></span>
-      <form 
-            class="font-lg add-category-form tasks-input"
+      <form class="font-lg add-category-form tasks-input"
             autofocus
             [formGroup]="addExpenseCategoryForm">
         <input matInput class="category-input-field-name" type="text" placeholder="Category Name" formControlName="categoryName" />
@@ -59,38 +33,60 @@
     <apx-chart [series]="chartOptions.series"
                [chart]="chartOptions.chart"
                [plotOptions]="chartOptions.plotOptions"
-               [labels]="chartOptions.labels"></apx-chart>
+               [labels]="chartOptions.labels"
+               [legend]="chartOptions.legend"></apx-chart>
 
-    <div class="tasks-input-container">
-      <span id="add-category-icon" class="iconify icon"
-            data-inline="false"
-            data-icon="ic:outline-add"></span>
-      <form class="font-lg add-category-form tasks-input"
-            autofocus
-            [formGroup]="addExpenseForm">
+    <mat-card *ngIf="displayedCategory" id="category-display">
+
+      <span (click)="deleteCategory()">
+        <i id="delete-category-button"
+           class="iconify icon"
+           data-inline="false"
+           data-icon="mdi:delete"
+           style="float:right">
+        </i>
+      </span>
+
+      <!--<mat-icon style="float:right;" (click)="deleteCategory()">close</mat-icon>-->
+
+      <div class="header">
+        <mat-card-title>
+          {{ displayedCategory.budgetCategoryName }}
+        </mat-card-title>
+      </div>
+      <div class="displayed-expenses-container">
+        <span id="add-category-icon" class="iconify icon"
+              data-inline="false"
+              data-icon="ic:outline-add"></span>
+        <form class="font-lg add-category-form displayed-expenses-input"
+              autofocus
+              [formGroup]="addExpenseForm">
           <input matInput class="category-input-field-name" type="text" placeholder="Expense Name" formControlName="expenseName" />
-          <mat-form-field class="expense-category-input">
-            <mat-label></mat-label>
+          <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="amount" (keydown.enter)="addExpense()" />
+        </form>
 
-            <mat-select formControlName="categoryName" placeholder="Category">
-              <mat-option *ngFor="let category of categories" [value]="category.budgetCategoryId">{{category.budgetCategoryName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="amount" (keydown.enter)="addExpense()" />
-      </form>
-    </div>
-    <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
-      <span id="add-category-icon" class="iconify icon"
-            data-inline="false"
-            data-icon="ic:outline-minus"></span>
+      </div>
 
-      <form class="font-lg add-category-form displayed-expenses-input">
-        <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
-        <input matInput class="category-input-field-name" type="text" [value]="displayedCategory.budgetCategoryName" disabled />
-        <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
 
-      </form>
-    </div>
+
+
+      <mat-card-content>
+        <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
+          <span class="add-category-icon" (click)="deleteExpense(expense)">
+            <i class="iconify icon"
+               data-inline="false"
+               data-icon="ic:outline-minus"></i>
+          </span>
+          <form class="font-lg add-category-form displayed-expenses-input">
+            <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
+            <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
+          </form>
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
 
   </div>
 </div>

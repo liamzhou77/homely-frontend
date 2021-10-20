@@ -19,10 +19,15 @@ export interface IBudgetCategory {
 }
 
 export interface IExpense {
-  expenseId?: number,
+  id?: number,
   budgetCategoryId?: number,
   expenseName?: string,
   amount?: number,
   dateAdded?: Date,
   createdBy?: number
+}
+
+
+export interface IResponseDto {
+  id: number;
 }

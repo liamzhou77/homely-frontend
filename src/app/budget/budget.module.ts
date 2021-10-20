@@ -19,6 +19,7 @@ import { EditBudgetComponent } from './edit-budget/edit-budget.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatIconModule } from '@angular/material/icon';
 import { CreateBudgetComponent } from './create-budget/create-budget.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [BudgetComponent, EditBudgetComponent, CreateBudgetComponent],
@@ -35,16 +36,14 @@ import { CreateBudgetComponent } from './create-budget/create-budget.component';
     MatButtonModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatButtonModule,
-    MatFormFieldModule,
     MatSelectModule,
     MatButtonToggleModule,
     MatDialogModule,
     MatSidenavModule,
     MatListModule,
     NgApexchartsModule,
-    MatIconModule
-    
+    MatIconModule,
+    MatCardModule,    
 
   ],
 })
