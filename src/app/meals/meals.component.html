@@ -1,1 +1,55 @@
-<p>meals works!</p>
+<div id="meal-container">
+  <div id="left-container" class="sub-container">
+    <mat-selection-list id="meal-list" [multiple]="false">
+      <h2 mat-subheader class="subheader">
+        Meals
+        <button mat-icon-button class="add-button">
+          <mat-icon (click)="setRightContainer('addMeal')">add</mat-icon>
+        </button>
+      </h2>
+      <mat-list-option *ngFor="let meal of meals">
+        <mat-icon mat-list-icon>local_dining</mat-icon>
+        <div mat-line></div>
+        <div mat-line></div>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-selection-list
+      id="recipe-list"
+      #recipeSelection
+      [multiple]="false"
+      (selectionChange)="rightContainer = 'recipe'"
+    >
+      <h2 mat-subheader class="subheader">
+        Recipes
+        <button mat-icon-button class="add-button">
+          <mat-icon (click)="navigateRecipeFormPage(true)">add</mat-icon>
+        </button>
+      </h2>
+      <mat-list-option *ngFor="let recipe of recipes" [value]="recipe">
+        <mat-icon mat-list-icon>menu_book</mat-icon>
+        <div mat-line>{{ recipe.recipeName }}</div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div id="right-container" class="sub-container" [ngSwitch]="rightContainer">
+    <div *ngSwitchCase="'addMeal'"></div>
+    <ng-container *ngSwitchCase="'addRecipe'">
+      <app-add-recipe
+        [householdId]="householdId"
+        [isAdd]="shouldAddRecipe"
+        [oldRecipe]="recipeSelection.selectedOptions.selected[0]?.value"
+        (newRecipeEvent)="addNewRecipe()"
+        (updateRecipeEvent)="updateRecipe($event)"
+      ></app-add-recipe>
+    </ng-container>
+    <ng-container *ngSwitchCase="'recipe'"
+      ><app-recipe
+        [recipe]="recipeSelection.selectedOptions.selected[0]?.value"
+        (deleteRecipeEvent)="deleteRecipe($event)"
+        (updateRecipeEvent)="navigateRecipeFormPage(false)"
+      ></app-recipe>
+    </ng-container>
+    <img *ngSwitchDefault src="assets/images/meal.png" id="meal-image" />
+  </div>
+</div>

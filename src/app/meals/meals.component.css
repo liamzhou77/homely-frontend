@@ -1,0 +1,58 @@
+#meal-container {
+  position: absolute;
+  top: 124px;
+  bottom: 50px;
+  left: 70px;
+  right: 70px;
+
+  display: grid;
+  grid-template-columns: 50% 50px 50%;
+  grid-template-areas: "left gap right";
+}
+
+#left-container {
+  grid-area: left;
+  display: grid;
+  grid-template-columns: 50% 20px 50%;
+  grid-template-areas: "meal gap2 recipe";
+}
+
+#meal-list {
+  grid-area: meal;
+}
+
+#recipe-list {
+  grid-area: recipe;
+}
+
+#right-container {
+  grid-area: right;
+  position: relative;
+}
+
+#meal-image {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 50%;
+  height: auto;
+}
+
+.sub-container {
+  background-color: white;
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.subheader {
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,94 @@
+<form>
+  <h1 *ngIf="isAdd" class="mat-h1">
+    Create a New Recipe
+    <button
+      mat-raised-button
+      id="add-btn"
+      color="primary"
+      [disabled]="!name || !instructions"
+      (click)="addRecipe()"
+    >
+      Submit
+    </button>
+  </h1>
+  <h1 *ngIf="!isAdd" class="mat-h1">
+    Update your Recipe
+    <button
+      mat-raised-button
+      id="add-btn"
+      color="primary"
+      [disabled]="!name || !instructions"
+      (click)="updateRecipe()"
+    >
+      Submit
+    </button>
+  </h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name" name="recipeName" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Instructions</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="instructions"
+      name="recipeInstruction"
+      rows="10"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-divider style="margin-bottom: 2rem"></mat-divider>
+
+  <mat-chip-list>
+    <mat-chip color="primary" *ngFor="let ingredient of ingredients">
+      {{
+        ingredient.foodName +
+          " - " +
+          ingredient.amount +
+          ingredient.unitOfMeasurement
+      }}
+      <button mat-icon-button (click)="removeIngredient(ingredient)">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-list>
+  <h2 class="mat-h2" style="margin-top: 1rem">
+    Ingredients
+    <button
+      mat-raised-button
+      id="add-btn"
+      [disabled]="!ingredientName || !ingredientUnit || !ingredientQuantity"
+      (click)="addIngredient()"
+    >
+      Add
+    </button>
+  </h2>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      placeholder="Potato"
+      name="ingredientName"
+      [(ngModel)]="ingredientName"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Quantity</mat-label>
+    <input
+      matInput
+      [(ngModel)]="ingredientQuantity"
+      name="ingredientQuantity"
+      placeholder="2"
+      type="number"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select [(value)]="ingredientUnit">
+      <mat-option *ngFor="let unit of unitList" [value]="unit">
+        {{ unit }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
