@@ -1,11 +1,11 @@
 export interface IBudget {
   budgetId?: number,
-  ownerId?: number,
-  budgetName?: string,
-  budgetStartDate?: Date,
-  budgetEndDate?: Date,
+  userId?: number,
+  name?: string,
+  startDate?: Date,
+  endDate?: Date,
   budgetCategories?: IBudgetCategory[],
-
+  incomes?: IIncome[]
 }
 
 
@@ -18,13 +18,22 @@ export interface IBudgetCategory {
   expenses?: IExpense[],
 }
 
+export interface IIncome {
+  id?: number,
+  budgetId?: number,
+  name?: string,
+  amount?: number,
+  userId?: number,
+  dateAdded?: Date
+}
+
 export interface IExpense {
   id?: number,
   budgetCategoryId?: number,
-  expenseName?: string,
+  name?: string,
   amount?: number,
   dateAdded?: Date,
-  createdBy?: number
+  userId?: number
 }
 
 

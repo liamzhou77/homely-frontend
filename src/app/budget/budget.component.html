@@ -3,7 +3,7 @@
     <mat-selection-list [multiple]="false">
       <mat-list-option (click)="createBudgetModal()">Create New Budget</mat-list-option>
       <mat-list-option *ngFor="let budget of budgets" (click)="setBudgetView(budget)">
-        {{budget.budgetName}}
+        {{budget.name}}
       </mat-list-option>
     </mat-selection-list>
   </mat-drawer>

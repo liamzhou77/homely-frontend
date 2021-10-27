@@ -43,7 +43,7 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     NgApexchartsModule,
     MatIconModule,
-    MatCardModule,    
+    MatCardModule,
 
   ],
 })

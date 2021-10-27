@@ -17,7 +17,7 @@ export class CreateBudgetComponent implements OnInit {
 
   ngOnInit(): void {
     this.budgetForm = new FormGroup({
-      budgetName: new FormControl(null, Validators.required),
+      name: new FormControl(null, Validators.required),
       start: new FormControl(null, Validators.required),
       end: new FormControl(null, Validators.required),
     });
@@ -26,9 +26,9 @@ export class CreateBudgetComponent implements OnInit {
 
   submitBudget() {
     this.newBudget = {
-      budgetName: this.budgetForm.controls.budgetName.value,
-      budgetStartDate: this.budgetForm.controls.start.value,
-      budgetEndDate: this.budgetForm.controls.end.value
+      name: this.budgetForm.controls.name.value,
+      startDate: this.budgetForm.controls.start.value,
+      endDate: this.budgetForm.controls.end.value
     }
 
     this.dialogRef.close();

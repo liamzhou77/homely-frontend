@@ -1,5 +1,11 @@
 <div class="row">
   <div class="col">
+    <div class="page-header">
+      <mat-card-title>
+        Incomes
+      </mat-card-title>
+    </div>
+
     <div class="tasks-input-container">
       <span id="add-category-icon" class="iconify icon"
             data-inline="false"
@@ -11,14 +17,61 @@
         <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="incomeAmount" (keydown.enter)="addIncome()" />
       </form>
     </div>
+
+
+
+
+
+    <!--<mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="assignees" multiple>
+    <mat-button-toggle value="bold" *ngFor="let member of householdMembers" [value]="member.userID">{{member.username}}</mat-button-toggle>
+  </mat-button-toggle-group>-->
+
+
+
     <apx-chart [series]="incomeChartOptions.series"
                [chart]="incomeChartOptions.chart"
                [plotOptions]="incomeChartOptions.plotOptions"
                [labels]="incomeChartOptions.labels"
                [legend]="incomeChartOptions.legend"></apx-chart>
 
+    <mat-card id="income-display" *ngIf="incomes.length > 0">
+
+
+
+
+      <mat-card-content>
+        <div class="displayed-expenses-container" *ngFor="let income of incomes">
+          <span class="add-category-icon" (click)="deleteIncome(income)">
+            <i class="iconify icon"
+               data-inline="false"
+               data-icon="ic:outline-minus"></i>
+          </span>
+          <form class="font-lg add-category-form displayed-expenses-input">
+            <input matInput class="category-input-field-name" type="text" [value]="income.name" disabled />
+            <input matInput class="category-input-field-limit" type="number" [value]="income.amount" disabled />
+          </form>
+        </div>
+
+      </mat-card-content>
+
+
+    </mat-card>
+
+    <div class="tasks-input-container">
+      <span id="add-category-icon" class="iconify icon"
+            data-inline="false"
+            data-icon="bx:bxs-user-plus"></span>
+      <p class="font-lg add-category-form displayed-expenses-input">Give Users View/Edit Permissions</p>
+    </div>
+
   </div>
   <div class="col">
+    <div class="page-header">
+      <mat-card-title>
+        Expenses
+      </mat-card-title>
+    </div>
+
     <div class="tasks-input-container">
       <span id="add-category-icon" class="iconify icon"
             data-inline="false"
@@ -61,7 +114,7 @@
         <form class="font-lg add-category-form displayed-expenses-input"
               autofocus
               [formGroup]="addExpenseForm">
-          <input matInput class="category-input-field-name" type="text" placeholder="Expense Name" formControlName="expenseName" />
+          <input matInput class="category-input-field-name" type="text" placeholder="Expense Name" formControlName="name" />
           <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="amount" (keydown.enter)="addExpense()" />
         </form>
 
@@ -78,7 +131,7 @@
                data-icon="ic:outline-minus"></i>
           </span>
           <form class="font-lg add-category-form displayed-expenses-input">
-            <input matInput class="category-input-field-name" type="text" [value]="expense.expenseName" disabled />
+            <input matInput class="category-input-field-name" type="text" [value]="expense.name" disabled />
             <input matInput class="category-input-field-limit" type="number" [value]="expense.amount" disabled />
           </form>
         </div>

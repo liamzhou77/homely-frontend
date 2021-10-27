@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { IBudget, IBudgetCategory, IExpense, IResponseDto } from '../dtos/budget-dtos';
+import { IBudget, IBudgetCategory, IExpense, IIncome, IResponseDto } from '../dtos/budget-dtos';
 import { IUserDto } from '../dtos/user-dto';
 
 
@@ -31,6 +31,17 @@ export class BudgetClient {
   createExpense(newExpense: IExpense): Observable<IResponseDto> {
 
     return this.client.post<any>(`${this.baseUrl}expense`, newExpense);
+  }
+
+
+  createIncome(newIncome: IIncome): Observable<IResponseDto> {
+
+    return this.client.post<any>(`${this.baseUrl}income`, newIncome);
+  }
+
+  deleteIncome(incomeId: number): Observable<any> {
+    console.log(incomeId)
+    return this.client.delete(`${this.baseUrl}income/${incomeId}`);
   }
 
   deleteExpense(expenseId: number): Observable<any> {

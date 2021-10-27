@@ -42,7 +42,7 @@ export class BudgetComponent implements OnInit {
     const modalRef = this.modalService.open(CreateBudgetComponent);
     modalRef.afterClosed().subscribe(() => {
       let newBudget = modalRef.componentInstance.newBudget;
-      newBudget.ownerId = this.userId;
+      newBudget.userId = this.userId;
       this.budgetClient.createBudget(newBudget).subscribe(() => {
         this.budgetClient.getBudgets(this.userId).subscribe(budgets => {
           this.budgets = budgets;

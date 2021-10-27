@@ -10,8 +10,10 @@ import {
   ApexLegend
 } from "ng-apexcharts";
 import { AuthService } from '../../core/auth-service.component';
-import { IBudget, IBudgetCategory, IExpense } from '../../shared/dtos/budget-dtos';
+import { IBudget, IBudgetCategory, IExpense, IIncome } from '../../shared/dtos/budget-dtos';
+import { IUserDto } from '../../shared/dtos/user-dto';
 import { BudgetClient } from '../../shared/restClients/budget-client';
+import { HouseholdClient } from '../../shared/restClients/household-client';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -31,10 +33,13 @@ export class EditBudgetComponent implements OnInit {
   @Input()
   set budget(budget: IBudget) {
     this.categories = budget.budgetCategories;
+    this.incomes = budget.incomes;
     this.currentBudget = budget;
     //clean chart
     this.chartOptions.series = Object.assign([], []);
     this.chartOptions.labels = Object.assign([], []);
+    this.incomeChartOptions.series = Object.assign([], []);
+    this.incomeChartOptions.labels = Object.assign([], []);
     this.displayedCategory = null;
 
 
@@ -57,7 +62,14 @@ export class EditBudgetComponent implements OnInit {
       this.chartOptions.series.push(newCategoryTotalPercentage);
       this.chartOptions.series = Object.assign([], this.chartOptions.series);
       this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
-    })    
+    })
+
+    this.incomes.forEach(income => {
+      this.incomeChartOptions.series.push(income.amount);
+      this.incomeChartOptions.labels.push(income.name);
+      this.chartOptions.series = Object.assign([], this.chartOptions.series);
+      this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
+    })
   }
 
   categoryTotals: number[] = [];
@@ -67,8 +79,11 @@ export class EditBudgetComponent implements OnInit {
   userId: number;
 
   categories: IBudgetCategory[] = [];
+  incomes: IIncome[] = [];
 
   displayedCategory: IBudgetCategory;
+
+  householdMembers: IUserDto[] = [];
 
   addExpenseForm: FormGroup;
   addExpenseCategoryForm: FormGroup;
@@ -78,7 +93,7 @@ export class EditBudgetComponent implements OnInit {
     this.addExpenseForm = new FormGroup({
       categoryName: new FormControl(null, Validators.required),
       amount: new FormControl(null, Validators.required),
-      expenseName: new FormControl(null, Validators.required),
+      name: new FormControl(null, Validators.required),
     });
 
     this.addExpenseCategoryForm = new FormGroup({
@@ -101,11 +116,14 @@ export class EditBudgetComponent implements OnInit {
 
   public incomeChartOptions: Partial<ChartOptions>;
 
-  constructor(private modalService: MatDialog, private budgetClient: BudgetClient, private authService: AuthService) {
+  constructor(private modalService: MatDialog, private budgetClient: BudgetClient, private authService: AuthService, private householdClient: HouseholdClient) {
 
     this.authService.userInfoChanged.subscribe(userInfo => {
       this.householdId = userInfo.householdID;
       this.userId = userInfo.userID;
+      this.householdClient.getHouseholdMembers(userInfo.householdID).subscribe(members => {
+        this.householdMembers = members;
+      })
     })
     
     this.chartOptions = {
@@ -257,12 +275,12 @@ export class EditBudgetComponent implements OnInit {
   }
 
   addExpense() {
-    if (this.addExpenseForm.controls.amount.value == null || this.addExpenseForm.controls.expenseName.value == null)
+    if (this.addExpenseForm.controls.amount.value == null || this.addExpenseForm.controls.name.value == null)
       return;
 
     let newExpense: IExpense = {
-      expenseName: this.addExpenseForm.controls.expenseName.value,
-      createdBy: this.userId,
+      name: this.addExpenseForm.controls.name.value,
+      userId: this.userId,
       amount: this.addExpenseForm.controls.amount.value,
       budgetCategoryId: this.displayedCategory.budgetCategoryId,
 
@@ -290,7 +308,7 @@ export class EditBudgetComponent implements OnInit {
       this.chartOptions.labels = Object.assign([], this.chartOptions.labels);
 
       this.addExpenseForm.controls.categoryName.setValue('')
-      this.addExpenseForm.controls.expenseName.setValue('')
+      this.addExpenseForm.controls.name.setValue('')
       this.addExpenseForm.controls.amount.setValue('');
 
     })
@@ -354,11 +372,44 @@ export class EditBudgetComponent implements OnInit {
   }
 
   addIncome() {
-    this.incomeChartOptions.series.push(this.addIncomeForm.controls.incomeAmount.value)
-    this.incomeChartOptions.labels.push(this.addIncomeForm.controls.incomeName.value)
+    let newIncome: IIncome = {
+      budgetId: this.currentBudget.budgetId,
+      name: this.addIncomeForm.controls.incomeName.value,
+      amount: this.addIncomeForm.controls.incomeAmount.value,
+      userId: this.userId
+    }
 
-    this.incomeChartOptions.series = Object.assign([], this.incomeChartOptions.series);
-    this.incomeChartOptions.labels = Object.assign([], this.incomeChartOptions.labels);
+    this.budgetClient.createIncome(newIncome).subscribe(response => {
+
+      this.incomeChartOptions.series.push(this.addIncomeForm.controls.incomeAmount.value)
+      this.incomeChartOptions.labels.push(this.addIncomeForm.controls.incomeName.value)
+
+      this.incomeChartOptions.series = Object.assign([], this.incomeChartOptions.series);
+      this.incomeChartOptions.labels = Object.assign([], this.incomeChartOptions.labels);
+
+      newIncome.id = response.id;
+
+      this.incomes.push(newIncome);
+    })
+
+  }
+
+
+  deleteIncome(income: IIncome) {
+    console.log(income)
+
+    this.budgetClient.deleteIncome(income.id).subscribe(() => {
+
+      let incomeIndex = this.incomes.findIndex(i => income.id == i.id);
+
+      this.incomeChartOptions.series.splice(incomeIndex, 1);
+      this.incomeChartOptions.labels.splice(incomeIndex, 1);
+      this.incomes.splice(incomeIndex, 1);
+
+      this.incomeChartOptions.series = Object.assign([], this.incomeChartOptions.series);
+      this.incomeChartOptions.labels = Object.assign([], this.incomeChartOptions.labels);
+    });
+
   }
 }
 
