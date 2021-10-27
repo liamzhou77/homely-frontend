@@ -5,7 +5,8 @@ export interface IBudget {
   startDate?: Date,
   endDate?: Date,
   budgetCategories?: IBudgetCategory[],
-  incomes?: IIncome[]
+  incomes?: IIncome[],
+  accesses?: number[]
 }
 
 

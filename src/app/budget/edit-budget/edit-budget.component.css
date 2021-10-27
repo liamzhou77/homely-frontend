@@ -173,3 +173,7 @@ mat-card-title {
   margin: 1rem auto 1rem auto;
   flex-wrap: wrap;
 }
+
+#budget-settings-button:hover {
+    cursor:pointer;
+}

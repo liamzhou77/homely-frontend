@@ -14,6 +14,7 @@ import { IBudget, IBudgetCategory, IExpense, IIncome } from '../../shared/dtos/b
 import { IUserDto } from '../../shared/dtos/user-dto';
 import { BudgetClient } from '../../shared/restClients/budget-client';
 import { HouseholdClient } from '../../shared/restClients/household-client';
+import { EditBudgetSettingsComponent } from '../edit-budget-settings/edit-budget-settings.component';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -410,6 +411,13 @@ export class EditBudgetComponent implements OnInit {
       this.incomeChartOptions.labels = Object.assign([], this.incomeChartOptions.labels);
     });
 
+  }
+
+  editBudgetSettingsModal() {
+    console.log(this.currentBudget)
+    const modalRef = this.modalService.open(EditBudgetSettingsComponent, { data: this.currentBudget });
+    modalRef.afterClosed().subscribe(() => {
+    })
   }
 }
 

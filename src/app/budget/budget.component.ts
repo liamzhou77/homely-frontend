@@ -50,7 +50,6 @@ export class BudgetComponent implements OnInit {
         })
       });
     })
-
   }
 
 

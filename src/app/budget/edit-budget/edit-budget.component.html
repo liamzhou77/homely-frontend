@@ -2,6 +2,12 @@
   <div class="col">
     <div class="page-header">
       <mat-card-title>
+        <span id="budget-settings-button" style="float:left" (click)="editBudgetSettingsModal()">
+          <span id="add-category-icon" class="iconify icon"
+                data-inline="false"
+                data-icon="bx:bxs-edit"></span>
+        </span>
+
         Incomes
       </mat-card-title>
     </div>
@@ -56,15 +62,8 @@
 
 
     </mat-card>
-
-    <div class="tasks-input-container">
-      <span id="add-category-icon" class="iconify icon"
-            data-inline="false"
-            data-icon="bx:bxs-user-plus"></span>
-      <p class="font-lg add-category-form displayed-expenses-input">Give Users View/Edit Permissions</p>
-    </div>
-
   </div>
+
   <div class="col">
     <div class="page-header">
       <mat-card-title>

@@ -1,0 +1,36 @@
+
+<form [formGroup]="budgetForm">
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Name of Budget" formControlName="name">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <mat-form-field>
+      <input matInput type="date" placeholder="Start Date" formControlName="start">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput type="date" placeholder="End Date" formControlName="end">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="assignees" multiple>
+        <mat-button-toggle value="bold" *ngFor="let member of householdMembers" [value]="member.userID">{{member.username}}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <button mat-raised-button type="submit"
+          color="primary"
+          (click)="submitBudget()">
+    Submit
+  </button>
+</form>
