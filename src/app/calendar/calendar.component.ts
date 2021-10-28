@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi, EventInput, EventSourceInput, FullCalendarComponent } from '@fullcalendar/angular';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from '../core/auth-service.component';
 import { ICalendarEventDto } from '../shared/dtos/calendar-event-dto';
+import { IUserDto } from '../shared/dtos/user-dto';
 import { CalendarClient } from '../shared/restClients/calendar-client';
+import { HouseholdClient } from '../shared/restClients/household-client';
 import { AddEditCalendarEventComponent } from './add-edit-calendar-event/add-edit-calendar-event.component';
 import { EditCalendarEventComponent } from './edit-calendar-event/edit-calendar-event.component';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
@@ -23,6 +26,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   currentEvents: EventApi[] = []; //call to api to get events
   householdId: number;
   userId: number;
+  householdMembers: IUserDto[] = [];
+  membersOfDisplayedEvents: number[] = [];
+  filterEventsForm: FormGroup;
 
 
   calendarVisible = true;
@@ -42,6 +48,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -55,11 +62,23 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private modalService: MatDialog, private calendarClient: CalendarClient, private authService: AuthService) {
+  constructor(private modalService: MatDialog, private calendarClient: CalendarClient, private authService: AuthService, private householdClient: HouseholdClient) {
+    this.filterEventsForm = new FormGroup({
+      displayedMembers: new FormControl()
+    })
     this.authService.userInfoChanged.subscribe(userInfo => {
       this.householdId = userInfo.householdID;
       this.userId = userInfo.userID;
+      this.householdClient.getHouseholdMembers(userInfo.householdID).subscribe(members => {
+        this.householdMembers = members;
+        this.householdMembers.forEach(member => {
+          this.membersOfDisplayedEvents.push(member.userID);
+        })
+        this.filterEventsForm.controls.displayedMembers.setValue(this.membersOfDisplayedEvents);
+      })
     })
+
+
   }
 
 
@@ -85,6 +104,36 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       })
 
     })
+  }
+
+  changeDisplayedEvents() {
+
+    this.calendarComponent.getApi().removeAllEvents();
+
+    this.calendarClient.getEvents(this.userId, this.householdId).subscribe(events => {
+      events.forEach(event => {
+        if (event.assignees.some(a => this.filterEventsForm.controls.displayedMembers.value.includes(a))) {
+
+          this.calendarComponent.getApi().addEvent({
+            id: event.eventId.toString(),
+            householdId: event.householdId,
+            creatorId: event.creatorId,
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            description: event.description,
+            color: event.color,
+            allDay: event.allDay,
+            assignees: event.assignees
+          })
+
+        }
+
+      })
+
+    })
+
+
   }
 
 

@@ -58,7 +58,7 @@ export class EditBudgetComponent implements OnInit {
         total += expense.amount;
       })
 
-      let newCategoryTotalPercentage = (total / category.percentageGoal) * 100;
+      let newCategoryTotalPercentage = (total / category.idealAmount) * 100;
       this.categoryTotals.push(total);
       this.chartOptions.series.push(newCategoryTotalPercentage);
       this.chartOptions.series = Object.assign([], this.chartOptions.series);
@@ -247,7 +247,7 @@ export class EditBudgetComponent implements OnInit {
       budgetId: this.currentBudget.budgetId,
       budgetCategoryName: this.addExpenseCategoryForm.controls.categoryName.value,
       color: "whatever",
-      percentageGoal: this.addExpenseCategoryForm.controls.categoryLimit.value
+      idealAmount: this.addExpenseCategoryForm.controls.categoryLimit.value
     }
 
     this.budgetClient.createBudgetCategory(newBudgetCategory).subscribe(response => {
@@ -296,7 +296,7 @@ export class EditBudgetComponent implements OnInit {
 
       let categoryTotal = this.categoryTotals[categoryIndex];
 
-      let categoryLimit = this.categories[categoryIndex].percentageGoal;
+      let categoryLimit = this.categories[categoryIndex].idealAmount;
 
       this.categoryTotals[categoryIndex] = categoryTotal + this.addExpenseForm.controls.amount.value;
 
@@ -333,7 +333,7 @@ export class EditBudgetComponent implements OnInit {
 
       let categoryTotal = this.categoryTotals[categoryIndex];
 
-      let categoryLimit = this.categories[categoryIndex].percentageGoal;
+      let categoryLimit = this.categories[categoryIndex].idealAmount;
 
       this.categoryTotals[categoryIndex] = categoryTotal - expense.amount;
 
@@ -397,7 +397,6 @@ export class EditBudgetComponent implements OnInit {
 
 
   deleteIncome(income: IIncome) {
-    console.log(income)
 
     this.budgetClient.deleteIncome(income.id).subscribe(() => {
 
@@ -414,9 +413,36 @@ export class EditBudgetComponent implements OnInit {
   }
 
   editBudgetSettingsModal() {
-    console.log(this.currentBudget)
     const modalRef = this.modalService.open(EditBudgetSettingsComponent, { data: this.currentBudget });
     modalRef.afterClosed().subscribe(() => {
+
+      modalRef.componentInstance.newBudget.accesses.forEach(async a => {
+        if (!this.currentBudget.accesses.includes(a)) {
+          await this.budgetClient.createAccess(this.currentBudget.budgetId, a).subscribe();
+        }
+      })
+
+      this.currentBudget.accesses.forEach(async a => {
+
+        if (!modalRef.componentInstance.newBudget.accesses.includes(a)) {
+          await this.budgetClient.deleteAccess(this.currentBudget.budgetId, a).subscribe();
+        }
+      });
+
+      this.currentBudget.accesses = modalRef.componentInstance.newBudget.accesses;
+
+      this.currentBudget.startDate = modalRef.componentInstance.newBudget.startDate;
+      this.currentBudget.endDate = modalRef.componentInstance.newBudget.endDate;
+      this.currentBudget.name = modalRef.componentInstance.newBudget.name;
+
+
+
+
+      this.budgetClient.modifyBudget(this.currentBudget).subscribe(() => {
+
+      })
+
+     
     })
   }
 }

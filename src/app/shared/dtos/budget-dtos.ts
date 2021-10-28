@@ -15,7 +15,7 @@ export interface IBudgetCategory {
   budgetId?: number,
   budgetCategoryName?: string,
   color?: string,
-  percentageGoal?: number
+  idealAmount?: number
   expenses?: IExpense[],
 }
 

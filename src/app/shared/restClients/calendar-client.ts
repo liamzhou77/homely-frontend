@@ -51,7 +51,6 @@ export class CalendarClient {
       color: color,
       allDay
     }
-    console.log(body)
 
     return this.client.put<any>(this.baseUrl + "Event", body);
   }

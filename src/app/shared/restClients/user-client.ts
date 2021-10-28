@@ -38,7 +38,6 @@ export class UserClient {
       color: '',
       allDay,
     };
-    console.log(body);
     return this.client.post<ICalendarCreateResponseDto>(
       this.baseUrl + 'Event',
       body

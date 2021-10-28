@@ -56,7 +56,6 @@ export class RegisterComponent implements OnInit {
       }))  
       .subscribe(
         (result: any) => {
-          console.log(result)
          if(result) {
            this.success = true;
            this.showForm = false;

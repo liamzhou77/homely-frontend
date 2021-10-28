@@ -1,9 +1,19 @@
+<div>
+
+  <form [formGroup]="filterEventsForm">
+    <div><label>Display following members' events:</label></div>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="displayedMembers" multiple style="margin: 4px;" (click)="changeDisplayedEvents()">
+      <ng-container *ngFor="let member of householdMembers">
+        <mat-button-toggle value="bold" [value]="member.userID">{{member.username}}</mat-button-toggle>
+      </ng-container>
+    </mat-button-toggle-group>
+  </form>
+
+</div>
 <div class='demo-app'>
 
 
   <div class='demo-app-main'>
-    <full-calendar
-      [options]='calendarOptions'
-    ></full-calendar>
+    <full-calendar [options]='calendarOptions'></full-calendar>
   </div>
 </div>
