@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { zip } from 'rxjs';
 import { Ingredient, Recipe } from '../shared/enums';
 import { RecipesService } from '../shared/recipes.service';
 
@@ -63,7 +64,7 @@ export class AddRecipeComponent implements OnInit, OnChanges {
     if (!this.isAdd) {
       this.name = this.oldRecipe.recipeName;
       this.instructions = this.oldRecipe.instructions;
-      this.ingredients = this.oldRecipe.ingredients;
+      this.ingredients = [...this.oldRecipe.ingredients];
     } else {
       this.name = '';
       this.instructions = '';
@@ -87,10 +88,40 @@ export class AddRecipeComponent implements OnInit, OnChanges {
     const newRecipe = this.oldRecipe;
     newRecipe.recipeName = this.name;
     newRecipe.instructions = this.instructions;
-    newRecipe.ingredients = this.ingredients;
-    this.recipeService
-      .updateRecipe(this.householdId, newRecipe)
-      .subscribe(() => this.updateRecipeEvent.emit(newRecipe));
+
+    const observables = [
+      this.recipeService.updateRecipe(this.householdId, newRecipe),
+    ];
+    const addedIngredients = this.ingredients.filter(
+      (i) => !this.isInIngredients(i.ingredientId, this.oldRecipe.ingredients)
+    );
+    const deletedIngredients = this.oldRecipe.ingredients.filter(
+      (i) => !this.isInIngredients(i.ingredientId, this.ingredients)
+    );
+    addedIngredients.forEach((i) =>
+      observables.push(
+        this.recipeService.addIngredient({
+          recipeId: this.oldRecipe.recipeId,
+          ...i,
+        })
+      )
+    );
+    deletedIngredients.forEach((i) =>
+      observables.push(this.recipeService.deleteIngredient(i.ingredientId))
+    );
+
+    zip(...observables).subscribe(() => {
+      this.updateRecipeEvent.emit(newRecipe);
+    });
+  }
+
+  private isInIngredients(id: number, ingredients: Ingredient[]): boolean {
+    for (let ingredient of ingredients) {
+      if (id === ingredient.ingredientId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public addIngredient() {

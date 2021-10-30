@@ -14,7 +14,7 @@ export interface Recipe {
 }
 
 export interface Ingredient {
-  recipeIngredientsId?: number;
+  ingredientId?: number;
   amount: number;
   unitOfMeasurement: string;
   recipeId?: number;

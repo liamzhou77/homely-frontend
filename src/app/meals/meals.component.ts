@@ -62,11 +62,16 @@ export class MealsComponent implements OnInit {
   }
 
   public updateRecipe(recipe: Recipe): void {
-    for (let i = 0; i < this.recipes.length; i++) {
-      if (this.recipes[i].recipeId === recipe.recipeId) {
-        this.recipes[i] = recipe;
-      }
-    }
-    this.rightContainer = 'recipe';
+    this.recipeService
+      .getIngredients(this.householdId, recipe.recipeId)
+      .subscribe((ingredients) => {
+        recipe.ingredients = ingredients;
+        for (let i = 0; i < this.recipes.length; i++) {
+          if (this.recipes[i].recipeId === recipe.recipeId) {
+            this.recipes[i] = recipe;
+          }
+        }
+        this.rightContainer = 'recipe';
+      });
   }
 }
