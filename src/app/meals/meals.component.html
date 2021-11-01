@@ -1,16 +1,23 @@
 <div id="meal-container">
   <div id="left-container" class="sub-container">
-    <mat-selection-list id="meal-list" [multiple]="false">
+    <mat-selection-list
+      #mealSelection
+      id="meal-list"
+      [multiple]="false"
+      (selectionChange)="rightContainer = 'meal'; recipeSelection.deselectAll()"
+    >
       <h2 mat-subheader class="subheader">
         Meals
         <button mat-icon-button class="add-button">
           <mat-icon (click)="setRightContainer('addMeal')">add</mat-icon>
         </button>
       </h2>
-      <mat-list-option *ngFor="let meal of meals">
+      <mat-list-option *ngFor="let meal of meals" [value]="meal">
         <mat-icon mat-list-icon>local_dining</mat-icon>
-        <div mat-line></div>
-        <div mat-line></div>
+        <div mat-line>{{ meal.recipeName }}</div>
+        <div mat-line>
+          {{ meal.mealType + " - " + (meal.scheduledDate | date) }}
+        </div>
       </mat-list-option>
     </mat-selection-list>
 
@@ -18,7 +25,7 @@
       id="recipe-list"
       #recipeSelection
       [multiple]="false"
-      (selectionChange)="rightContainer = 'recipe'"
+      (selectionChange)="rightContainer = 'recipe'; mealSelection.deselectAll()"
     >
       <h2 mat-subheader class="subheader">
         Recipes
@@ -43,6 +50,13 @@
         (updateRecipeEvent)="updateRecipe($event)"
       ></app-add-recipe>
     </ng-container>
+    <ng-container *ngSwitchCase="'addMeal'">
+      <app-add-meal
+        [householdId]="householdId"
+        [recipes]="recipes"
+        (newMealEvent)="addNewMeal($event)"
+      ></app-add-meal>
+    </ng-container>
     <ng-container *ngSwitchCase="'recipe'"
       ><app-recipe
         [recipe]="recipeSelection.selectedOptions.selected[0]?.value"
@@ -50,6 +64,15 @@
         (updateRecipeEvent)="navigateRecipeFormPage(false)"
       ></app-recipe>
     </ng-container>
+    <ng-container *ngSwitchCase="'meal'"
+      ><app-meal
+        [meal]="mealSelection.selectedOptions.selected[0]?.value"
+        [recipe]="
+          getRecipeFromMeal(mealSelection.selectedOptions.selected[0]?.value)
+        "
+        (deleteMealEvent)="deleteMeal($event)"
+      ></app-meal
+    ></ng-container>
     <img *ngSwitchDefault src="assets/images/meal.png" id="meal-image" />
   </div>
 </div>

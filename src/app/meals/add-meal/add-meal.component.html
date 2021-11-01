@@ -1,0 +1,48 @@
+<form>
+  <h1 class="mat-h1">
+    Create a New Meal
+    <button
+      mat-raised-button
+      id="add-btn"
+      color="primary"
+      [disabled]="
+        !recipe || !scheduledDate || !mealType || !isDateValid(scheduledDate)
+      "
+      (click)="addMeal()"
+    >
+      Submit
+    </button>
+  </h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Recipe</mat-label>
+    <mat-select [(value)]="recipe">
+      <mat-option *ngFor="let recipe of recipes" [value]="recipe">
+        {{ recipe.recipeName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Meal Type</mat-label>
+    <mat-select [(value)]="mealType">
+      <mat-option
+        *ngFor="let type of ['Breakfast', 'Lunch', 'Dinner']"
+        [value]="type"
+      >
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Choose a date</mat-label>
+    <input
+      matInput
+      name="scheduledDate"
+      [matDatepicker]="picker"
+      [matDatepickerFilter]="minDateFilter"
+      [(ngModel)]="scheduledDate"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</form>

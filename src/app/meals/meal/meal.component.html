@@ -1,0 +1,23 @@
+<div id="header-and-btns">
+  <h1 class="mat-display1">
+    {{ meal.mealType }} <span style="font-weight: 400">on</span>
+    {{ meal.scheduledDate | date }}
+  </h1>
+  <div>
+    <button mat-raised-button color="warn" (click)="deleteMeal()">
+      Delete
+    </button>
+  </div>
+</div>
+<h1 class="mat-h2">Recipe</h1>
+<div class="mat-body">{{ recipe.recipeName }}</div>
+<h2 class="mat-h2">Instructions</h2>
+<div class="mat-body">{{ recipe.instructions }}</div>
+<h2 class="mat-h2" style="margin-top: 1rem; margin-bottom: 0px">Ingredients</h2>
+<mat-list>
+  <mat-list-item *ngFor="let ingredient of recipe.ingredients">
+    <mat-icon mat-list-icon>restaurant</mat-icon>
+    <div mat-line>{{ ingredient.foodName }}</div>
+    <div mat-line>{{ ingredient.amount + ingredient.unitOfMeasurement }}</div>
+  </mat-list-item>
+</mat-list>

@@ -1,0 +1,12 @@
+mat-list-item {
+  height: 50px !important;
+}
+
+:host /deep/ .mat-list-item-content {
+  padding: 0 !important;
+}
+
+#header-and-btns {
+  display: flex;
+  justify-content: space-between;
+}

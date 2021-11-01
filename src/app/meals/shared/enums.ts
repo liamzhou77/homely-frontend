@@ -1,9 +1,9 @@
 export interface Meal {
-  mealId: number;
+  mealId?: number;
   recipeId: number;
-  scheduleDate: string;
+  recipeName?: string;
+  scheduledDate: Date;
   mealType: string;
-  multiplyRecipe: number;
 }
 
 export interface Recipe {
