@@ -25,14 +25,14 @@ export class AddRecipeComponent implements OnInit, OnChanges {
 
   public ingredientName: string;
   public ingredientQuantity: number;
-  public ingredientUnit: string;
+  public ingredientUnit = '';
 
   public ingredients: Ingredient[] = [];
 
   public unitList = [
-    'pc.',
-    'tsp.',
-    'tbsp.',
+    'piece',
+    'tsp',
+    'tbsp',
     'fl oz',
     'gill',
     'cup',

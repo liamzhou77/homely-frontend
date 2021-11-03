@@ -1,43 +1,59 @@
 <div id="meal-container">
   <div id="left-container" class="sub-container">
-    <mat-selection-list
-      #mealSelection
-      id="meal-list"
-      [multiple]="false"
-      (selectionChange)="rightContainer = 'meal'; recipeSelection.deselectAll()"
-    >
-      <h2 mat-subheader class="subheader">
-        Meals
-        <button mat-icon-button class="add-button">
-          <mat-icon (click)="setRightContainer('addMeal')">add</mat-icon>
-        </button>
-      </h2>
-      <mat-list-option *ngFor="let meal of meals" [value]="meal">
-        <mat-icon mat-list-icon>local_dining</mat-icon>
-        <div mat-line>{{ meal.recipeName }}</div>
-        <div mat-line>
-          {{ meal.mealType + " - " + (meal.scheduledDate | date) }}
-        </div>
-      </mat-list-option>
-    </mat-selection-list>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-left: 18px"
+        (click)="setRightContainer('shoppingList')"
+      >
+        View Grocery List
+      </button>
+    </div>
+    <div id="left-body">
+      <mat-selection-list
+        #mealSelection
+        id="meal-list"
+        [multiple]="false"
+        (selectionChange)="
+          rightContainer = 'meal'; recipeSelection.deselectAll()
+        "
+      >
+        <h2 mat-subheader class="subheader">
+          Meals
+          <button mat-icon-button class="add-button">
+            <mat-icon (click)="setRightContainer('addMeal')">add</mat-icon>
+          </button>
+        </h2>
+        <mat-list-option *ngFor="let meal of meals" [value]="meal">
+          <mat-icon mat-list-icon>local_dining</mat-icon>
+          <div mat-line>{{ meal.recipeName }}</div>
+          <div mat-line>
+            {{ meal.mealType + " - " + (meal.scheduledDate | date) }}
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
 
-    <mat-selection-list
-      id="recipe-list"
-      #recipeSelection
-      [multiple]="false"
-      (selectionChange)="rightContainer = 'recipe'; mealSelection.deselectAll()"
-    >
-      <h2 mat-subheader class="subheader">
-        Recipes
-        <button mat-icon-button class="add-button">
-          <mat-icon (click)="navigateRecipeFormPage(true)">add</mat-icon>
-        </button>
-      </h2>
-      <mat-list-option *ngFor="let recipe of recipes" [value]="recipe">
-        <mat-icon mat-list-icon>menu_book</mat-icon>
-        <div mat-line>{{ recipe.recipeName }}</div>
-      </mat-list-option>
-    </mat-selection-list>
+      <mat-selection-list
+        id="recipe-list"
+        #recipeSelection
+        [multiple]="false"
+        (selectionChange)="
+          rightContainer = 'recipe'; mealSelection.deselectAll()
+        "
+      >
+        <h2 mat-subheader class="subheader">
+          Recipes
+          <button mat-icon-button class="add-button">
+            <mat-icon (click)="navigateRecipeFormPage(true)">add</mat-icon>
+          </button>
+        </h2>
+        <mat-list-option *ngFor="let recipe of recipes" [value]="recipe">
+          <mat-icon mat-list-icon>menu_book</mat-icon>
+          <div mat-line>{{ recipe.recipeName }}</div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
   </div>
   <div id="right-container" class="sub-container" [ngSwitch]="rightContainer">
     <div *ngSwitchCase="'addMeal'"></div>
@@ -73,6 +89,12 @@
         (deleteMealEvent)="deleteMeal($event)"
       ></app-meal
     ></ng-container>
+    <ng-container *ngSwitchCase="'shoppingList'">
+      <app-shopping-list
+        [householdId]="householdId"
+        [userId]="userId"
+      ></app-shopping-list>
+    </ng-container>
     <img *ngSwitchDefault src="assets/images/meal.png" id="meal-image" />
   </div>
 </div>

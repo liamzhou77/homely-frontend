@@ -15,6 +15,7 @@ export class MealsComponent implements OnInit {
   public recipes: Recipe[];
   public rightContainer = '';
   public householdId: number;
+  public userId: number;
   public shouldAddRecipe: boolean;
 
   @ViewChild('recipeSelection', { static: true })
@@ -27,9 +28,10 @@ export class MealsComponent implements OnInit {
     private recipeService: RecipesService,
     private mealsService: MealsService
   ) {
-    this.authService.userInfoChanged.subscribe(
-      (userInfo) => (this.householdId = userInfo.householdID)
-    );
+    this.authService.userInfoChanged.subscribe((userInfo) => {
+      this.householdId = userInfo.householdID;
+      this.userId = userInfo.userID;
+    });
   }
 
   ngOnInit(): void {

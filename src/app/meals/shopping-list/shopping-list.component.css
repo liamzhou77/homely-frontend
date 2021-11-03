@@ -1,0 +1,26 @@
+#grocerylist-container {
+  display: grid;
+  grid-template-columns: 50% 20px 50%;
+  grid-template-areas: "list gap2 form";
+}
+
+#grocerylist-left-container {
+  grid-area: list;
+}
+
+#grocerylist-right-container {
+  grid-area: form;
+}
+
+.items-card {
+  border-radius: 15px;
+  padding: 7px 1rem;
+  padding-left: 0;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  width: 100%;
+}

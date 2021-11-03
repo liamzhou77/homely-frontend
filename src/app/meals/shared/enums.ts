@@ -20,3 +20,19 @@ export interface Ingredient {
   recipeId?: number;
   foodName: string;
 }
+
+export interface GroceryListItem {
+  itemId?: number;
+  foodName: string;
+  createdBy: string;
+  checkedOff: boolean;
+  checkedOffBy: string;
+  quantity: number;
+  unitOfMeasurement: string;
+  generated: boolean;
+}
+
+export interface DeletedAndGeneratedItems {
+  deletedIDs: number[];
+  generatedItems: GroceryListItem[];
+}

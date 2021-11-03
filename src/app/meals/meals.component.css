@@ -10,11 +10,12 @@
   grid-template-areas: "left gap right";
 }
 
-#left-container {
+#left-body {
   grid-area: left;
   display: grid;
   grid-template-columns: 50% 20px 50%;
   grid-template-areas: "meal gap2 recipe";
+  margin-top: 1rem;
 }
 
 #meal-list {
