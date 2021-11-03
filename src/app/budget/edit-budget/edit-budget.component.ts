@@ -130,7 +130,6 @@ export class EditBudgetComponent implements OnInit {
     this.chartOptions = {
       series: [],
       chart: {
-        height: 350,
         type: "radialBar",
         events: {
           dataPointSelection: (event, chart, config) => { this.selectedCategory(event, chart, config) },
@@ -391,6 +390,8 @@ export class EditBudgetComponent implements OnInit {
       newIncome.id = response.id;
 
       this.incomes.push(newIncome);
+      this.addIncomeForm.controls.incomeName.setValue(null);
+      this.addIncomeForm.controls.incomeAmount.setValue(null);
     })
 
   }

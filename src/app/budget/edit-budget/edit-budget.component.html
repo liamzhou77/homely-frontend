@@ -3,17 +3,19 @@
     <div class="page-header">
       <mat-card-title>
         <span id="budget-settings-button" style="float:left" (click)="editBudgetSettingsModal()">
-          <span id="add-category-icon" class="iconify icon"
+          <span class="iconify icon"
                 data-inline="false"
                 data-icon="bx:bxs-edit"></span>
         </span>
 
-        Incomes
+        <span style="position:relative; right:5%;">
+          Incomes
+        </span>
       </mat-card-title>
     </div>
 
     <div class="tasks-input-container">
-      <span id="add-category-icon" class="iconify icon"
+      <span class="iconify icon"
             data-inline="false"
             data-icon="ic:outline-add"></span>
       <form class="font-lg add-category-form tasks-input"
@@ -23,6 +25,10 @@
         <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="incomeAmount" (keydown.enter)="addIncome()" />
       </form>
     </div>
+
+    <mat-form-field style="display:none;">
+      <input matInput type="text" />
+    </mat-form-field>
 
 
 
@@ -34,11 +40,16 @@
 
 
 
-    <apx-chart [series]="incomeChartOptions.series"
+  <div class="chart-container">
+    <apx-chart 
+               [series]="incomeChartOptions.series"
                [chart]="incomeChartOptions.chart"
                [plotOptions]="incomeChartOptions.plotOptions"
                [labels]="incomeChartOptions.labels"
                [legend]="incomeChartOptions.legend"></apx-chart>
+
+
+  </div>
 
     <mat-card id="income-display" *ngIf="incomes.length > 0">
 
@@ -47,11 +58,20 @@
 
       <mat-card-content>
         <div class="displayed-expenses-container" *ngFor="let income of incomes">
-          <span class="add-category-icon" (click)="deleteIncome(income)">
+          <!--<span class="add-category-icon" (click)="deleteIncome(income)">
             <i class="iconify icon"
                data-inline="false"
                data-icon="ic:outline-minus"></i>
-          </span>
+          </span>-->
+
+
+          <span (click)="deleteIncome(income)" class="icon-container">
+            <i class="add-category-icon iconify icon"
+               data-inline="false"
+               data-icon="ic:outline-minus">
+            </i>
+          </span>       
+
           <form class="font-lg add-category-form displayed-expenses-input">
             <input matInput class="category-input-field-name" type="text" [value]="income.name" disabled />
             <input matInput class="category-input-field-limit" type="number" [value]="income.amount" disabled />
@@ -72,7 +92,7 @@
     </div>
 
     <div class="tasks-input-container">
-      <span id="add-category-icon" class="iconify icon"
+      <span class="iconify icon"
             data-inline="false"
             data-icon="ic:outline-add"></span>
       <form class="font-lg add-category-form tasks-input"
@@ -82,11 +102,15 @@
         <input matInput class="category-input-field-limit" type="number" placeholder="$$$" formControlName="categoryLimit" (keydown.enter)="addExpenseCategory()" />
       </form>
     </div>
-    <apx-chart [series]="chartOptions.series"
-               [chart]="chartOptions.chart"
-               [plotOptions]="chartOptions.plotOptions"
-               [labels]="chartOptions.labels"
-               [legend]="chartOptions.legend"></apx-chart>
+    <div class="chart-container">
+      <apx-chart 
+                 [series]="chartOptions.series"
+                 [chart]="chartOptions.chart"
+                 [plotOptions]="chartOptions.plotOptions"
+                 [labels]="chartOptions.labels"
+                 [legend]="chartOptions.legend"></apx-chart>
+
+    </div>
 
     <mat-card *ngIf="displayedCategory" id="category-display">
 
@@ -107,7 +131,7 @@
         </mat-card-title>
       </div>
       <div class="displayed-expenses-container">
-        <span id="add-category-icon" class="iconify icon"
+        <span class="iconify icon"
               data-inline="false"
               data-icon="ic:outline-add"></span>
         <form class="font-lg add-category-form displayed-expenses-input"
@@ -124,7 +148,7 @@
 
       <mat-card-content>
         <div class="displayed-expenses-container" *ngFor="let expense of displayedCategory?.expenses">
-          <span class="add-category-icon" (click)="deleteExpense(expense)">
+          <span class="add-category-icon icon-container" (click)="deleteExpense(expense)">
             <i class="iconify icon"
                data-inline="false"
                data-icon="ic:outline-minus"></i>

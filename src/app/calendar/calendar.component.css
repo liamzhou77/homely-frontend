@@ -44,3 +44,19 @@ b { /* used for event dates/times */
   max-width: 1100px;
   margin: 0 auto;
 }
+
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+  width: 22px;
+  height: 22px;
+  margin-right: 1rem;
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-frame,
+mat-checkbox ::ng-deep .mat-checkbox-background {
+  border-radius: 7px;
+}
+
+#display-events-div {
+    margin-left: 3em;
+}

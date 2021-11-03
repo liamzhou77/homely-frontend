@@ -29,6 +29,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   householdMembers: IUserDto[] = [];
   membersOfDisplayedEvents: number[] = [];
   filterEventsForm: FormGroup;
+  sharedByAll: boolean = false;
 
 
   calendarVisible = true;
@@ -112,22 +113,43 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     this.calendarClient.getEvents(this.userId, this.householdId).subscribe(events => {
       events.forEach(event => {
-        if (event.assignees.some(a => this.filterEventsForm.controls.displayedMembers.value.includes(a))) {
+        if (!this.sharedByAll) {
+          if (event.assignees.some(a => this.filterEventsForm.controls.displayedMembers.value.includes(a))) {
+           
+            this.calendarComponent.getApi().addEvent({
+              id: event.eventId.toString(),
+              householdId: event.householdId,
+              creatorId: event.creatorId,
+              title: event.title,
+              start: event.start,
+              end: event.end,
+              description: event.description,
+              color: event.color,
+              allDay: event.allDay,
+              assignees: event.assignees
+            })
+          }
+        }
+        else {
 
-          this.calendarComponent.getApi().addEvent({
-            id: event.eventId.toString(),
-            householdId: event.householdId,
-            creatorId: event.creatorId,
-            title: event.title,
-            start: event.start,
-            end: event.end,
-            description: event.description,
-            color: event.color,
-            allDay: event.allDay,
-            assignees: event.assignees
-          })
+          if (this.filterEventsForm.controls.displayedMembers.value.every((a: number) => event.assignees.includes(a))) {
+
+            this.calendarComponent.getApi().addEvent({
+              id: event.eventId.toString(),
+              householdId: event.householdId,
+              creatorId: event.creatorId,
+              title: event.title,
+              start: event.start,
+              end: event.end,
+              description: event.description,
+              color: event.color,
+              allDay: event.allDay,
+              assignees: event.assignees
+            })
+          }
 
         }
+
 
       })
 

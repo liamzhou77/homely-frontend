@@ -1,5 +1,4 @@
-<div>
-
+<div id="display-events-div">
   <form [formGroup]="filterEventsForm">
     <div><label>Display following members' events:</label></div>
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="displayedMembers" multiple style="margin: 4px;" (click)="changeDisplayedEvents()">
@@ -8,8 +7,12 @@
       </ng-container>
     </mat-button-toggle-group>
   </form>
+  <div style="margin:2px;">
+    <mat-checkbox (click)="changeDisplayedEvents()" [(ngModel)]="sharedByAll">Show only events shared by all selected members</mat-checkbox>
+  </div>
 
 </div>
+
 <div class='demo-app'>
 
 
