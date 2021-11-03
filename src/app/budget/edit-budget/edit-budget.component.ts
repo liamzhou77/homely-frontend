@@ -182,50 +182,73 @@ export class EditBudgetComponent implements OnInit {
 
 
 
-
     this.incomeChartOptions = {
       series: [],
       chart: {
         height: 350,
         type: "donut",
         events: {
-        }
+        }, 
       },
       plotOptions: {
-        radialBar: {
-          hollow: {
-            margin: 5,
-            size: '30%',
-            background: 'transparent',
-            image: undefined,
-          },
+        pie: {
+          startAngle: 0,
+          endAngle: 360,
+          expandOnClick: true,
+          offsetX: 0,
+          offsetY: 0,
+          customScale: 1,
           dataLabels: {
-            name: {
-              fontSize: "22px",
+            offset: 0,
+            minAngleToShowLabel: 10
+          },
+          donut: {
+            size: '65%',
+            background: 'transparent',
+            labels: {
               show: true,
-            },
-            value: {
-              fontSize: "16px"
-            },
-            total: {
-              show: true,
-              label: "Total Income",
-              formatter: (w) => {
-                return "10"
-                //let total = 0;
-                //this.categories.forEach(category => {
-                //  if (!category.expenses)
-                //    category.expenses = [];
-                //  category.expenses.forEach(expense => {
-                //    total += expense.amount;
-                //  })
-                //})
-                //return total.toString() + "$";
+              name: {
+                show: true,
+                fontSize: '22px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 600,
+                color: undefined,
+                offsetY: -10,
+                formatter: function (val) {
+                  return val
+                }
+              },
+              value: {
+                show: true,
+                fontSize: '16px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 400,
+                color: undefined,
+                offsetY: 16,
+                formatter: function (val) {
+                  return val
+                }
+              },
+              total: {
+                show: true,
+                showAlways: true,
+                label: 'Total Income:',
+                fontSize: '22px',
+                fontWeight: 600,
+                color: '#373d3f',
+                formatter: () => {
+                  let total = 0;
+                  this.incomes.forEach(income => {
+                    total += income.amount;
+                  })
+                  return total.toString() + "$";
+                }
               }
             }
-          }
+          },
         }
       },
+
       labels: [],
       legend: {
         show: true,
