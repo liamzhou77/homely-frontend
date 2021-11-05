@@ -3,7 +3,9 @@
     <div class="mat-h1">Grocery List</div>
     <div class="items-card" *ngFor="let item of uncheckedItems">
       <mat-checkbox (change)="setCompleted(item)">
-        {{ item.foodName + " - " + item.quantity + item.unitOfMeasurement }}
+        {{
+          item.foodName + " - " + item.quantity + " " + item.unitOfMeasurement
+        }}
       </mat-checkbox>
       <mat-icon style="cursor: pointer" (click)="deleteItem(item)"
         >close</mat-icon
@@ -15,7 +17,9 @@
         (change)="setCompleted(item)"
         [checked]="true"
       >
-        {{ item.foodName + " - " + item.quantity + item.unitOfMeasurement }}
+        {{
+          item.foodName + " - " + item.quantity + " " + item.unitOfMeasurement
+        }}
       </mat-checkbox>
       <mat-icon style="cursor: pointer" (click)="deleteItem(item)"
         >close</mat-icon

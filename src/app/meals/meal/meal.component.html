@@ -18,6 +18,8 @@
   <mat-list-item *ngFor="let ingredient of recipe.ingredients">
     <mat-icon mat-list-icon>restaurant</mat-icon>
     <div mat-line>{{ ingredient.foodName }}</div>
-    <div mat-line>{{ ingredient.amount + ingredient.unitOfMeasurement }}</div>
+    <div mat-line>
+      {{ ingredient.amount + " " + ingredient.unitOfMeasurement }}
+    </div>
   </mat-list-item>
 </mat-list>
