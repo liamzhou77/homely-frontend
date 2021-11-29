@@ -18,4 +18,14 @@ export class SettingService {
       assigneeUsername: username,
     });
   }
+
+  public leaveHousehold(userId: number) {
+    return this.http.put(
+      `${this.baseUrl}user/${userId}/leave-household`,
+      {},
+      {
+        responseType: 'text',
+      }
+    );
+  }
 }

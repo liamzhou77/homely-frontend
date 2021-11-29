@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from '../core/auth-service.component';
 import { IUserDto } from '../shared/dtos/user-dto';
 import { HouseholdClient } from '../shared/restClients/household-client';
@@ -19,7 +20,8 @@ export class SettingsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private settingService: SettingService,
     private authService: AuthService,
-    private householdClient: HouseholdClient
+    private householdClient: HouseholdClient,
+    private router: Router
   ) {
     this.authService.userInfoChanged.subscribe((userInfo) => {
       this.userId = userInfo.userID;
@@ -44,5 +46,11 @@ export class SettingsComponent implements OnInit {
           this.invite_username = '';
         });
     }
+  }
+
+  public leaveHousehold() {
+    this.settingService
+      .leaveHousehold(this.userId)
+      .subscribe(() => this.router.navigate(['create-household']));
   }
 }

@@ -86,9 +86,6 @@
           >Welcome {{ user.profile.preferred_username }}!</span
         >
         <app-notifications></app-notifications>
-        <div class="avatar-container-lg">
-          <img src="assets/images/avatar1.jpg" class="avatar" />
-        </div>
       </div>
     </div>
     <div
@@ -102,9 +99,7 @@
     </div>
     <div id="top-bar" *ngIf="!isLoggedIn">
       <div id="top-bar-list">
-        <div class="top-bar-item-button" style="visibility:hidden">
-
-        </div>
+        <div class="top-bar-item-button" style="visibility: hidden"></div>
         <!--<div class="top-bar-item-button" (click)="login()">
           <span class="top-bar-text">Login</span>
         </div>-->

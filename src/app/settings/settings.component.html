@@ -6,7 +6,6 @@
         >account_circle</mat-icon
       >
       <div mat-line style="font-weight: 700">{{ member.username }}</div>
-      <div mat-line>Admin</div>
     </mat-list-item>
     <div mat-subheader>Invitation</div>
   </mat-list>
@@ -29,5 +28,13 @@
     (click)="invite()"
   >
     Submit
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    style="margin-top: 2rem"
+    (click)="leaveHousehold()"
+  >
+    Leave Household
   </button>
 </div>
