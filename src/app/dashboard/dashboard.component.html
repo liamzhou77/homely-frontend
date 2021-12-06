@@ -42,8 +42,46 @@
   </div>
   <div id="right-container" class="sub-container">
     <div id="right-body" class="sub-body">
-      <div id="right-left-container">Calendar</div>
-      <div id="right-right-container">Budget</div>
+      <mat-list id="right-left-container">
+        <h2 mat-subheader class="subheader">Today's Events</h2>
+        <button mat-raised-button
+                routerLink="/calendar"
+                color="primary"
+                class="view-more-btn">
+          View Details
+        </button>
+        <mat-list-item *ngFor="let event of calendarEvents">
+          <span mat-list-icon class="iconify"
+                data-inline="true"
+                data-icon="ic:outline-calendar-today"
+                style="height:18px;"></span>
+          <div mat-line>{{ event.title }}</div>
+          <div mat-line>
+            {{ event.description }}
+          </div>
+        </mat-list-item>
+      </mat-list>
+       <mat-list id="right-right-container">
+        <h2 mat-subheader class="subheader">
+          Current Budgets
+        </h2>
+        <button mat-raised-button
+                routerLink="/budget"
+                color="primary"
+                class="view-more-btn">
+          View Details
+        </button>
+        <mat-list-item *ngFor="let budget of budgets">
+          <span mat-list-icon class="iconify"
+                data-inline="true"
+                data-icon="ic:outline-attach-money"
+                style="height:18px;"></span>
+          <div mat-line>{{ budget.name }}</div>
+          <!--<div mat-line>
+            {{ event.description }}
+          </div>-->
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </div>
